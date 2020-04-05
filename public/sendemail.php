@@ -13,6 +13,6 @@ $headers .= 'Return-Path: info@quizis.nl' . "\r\n";
 $headers .= "Subject: {$subject}". "\r\n";
 $headers .= "X-Mailer: PHP/".phpversion(). "\r\n";
 
-$result = mail($to, $subject, $message, $headers);
+$result = mail($to, $subject, $message, $headers, "-f server@sjenkie.nl");
 
 die();
