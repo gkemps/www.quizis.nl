@@ -9,7 +9,7 @@ if (empty($_POST['name'])) {
 $teamname = $conn->real_escape_string($_POST['name']);
 $teamcaptain = $conn->real_escape_string($_POST['captain']);
 $email = $conn->real_escape_string($_POST['email']);
-$quizId = 123;
+$quizId = 135;
 
 $sql = "INSERT INTO quiz_Team (name, captain, email, quiz_quiz_id)
 VALUES ('{$teamname}', '{$teamcaptain}', '{$email}', $quizId)";
