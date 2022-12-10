@@ -56,7 +56,7 @@
 
                 <div class="col-sm-12 text-center">
                     <h2>Bedankt voor jullie inschrijving!</h2>
-                    <div class="display-4">Graag jullie teambijdrage van &euro;15 overmaken <a href="https://www.bunq.me/quiz/15/<?php echo $_GET['team'] . "-" . $_GET['captain']; ?>">via deze link</a>. Jullie ontvangen binnen 48h een bevestiging van inschrijving.</div>
+                    <div class="display-4">Teambijdrage van &euro;15 graag voldoen <a href="https://www.bunq.me/quiz/15/<?php echo $_GET['team'] . "-" . $_GET['captain']; ?>">via deze link</a>. Na betaling ontvangen jullie binnen 48h een bevestiging van inschrijving.</div>
                 </div>
             </div>
         </div>
