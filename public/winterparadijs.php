@@ -29,4 +29,4 @@ if (!$conn->query($sql)) {
 }
 $conn->close();
 
-header('Location: http://www.quizis.nl/bedankt_winterparadijs.php?team=x&captain=y');
+header('Location: http://www.quizis.nl/bedankt_winterparadijs.php?team='.$teamname.'&captain='.$teamcaptain);
