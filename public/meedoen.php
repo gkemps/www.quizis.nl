@@ -9,7 +9,7 @@ if (empty($_POST['name'])) {
 $teamname = $conn->real_escape_string($_POST['name']);
 $teamcaptain = $conn->real_escape_string($_POST['captain']);
 $email = $conn->real_escape_string($_POST['email']);
-$quizId = 135;
+$quizId = $conn->real_escape_string($_POST['quizId']);
 
 $sql = "INSERT INTO quiz_Team (name, captain, email, quiz_quiz_id)
 VALUES ('{$teamname}', '{$teamcaptain}', '{$email}', $quizId)";
@@ -29,4 +29,4 @@ if (!$conn->query($sql)) {
 }
 $conn->close();
 
-header('Location: http://www.quizis.nl/bedankt.html');
+header("Location: http://www.quizis.nl/bedankt.php?team={$teamname}&captain={$teamcaptain}");
