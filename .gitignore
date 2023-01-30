@@ -2,3 +2,4 @@
 public/connect.php
 secrets.php
 vendor
+.DS_Store
