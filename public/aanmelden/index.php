@@ -1,5 +1,10 @@
 <?php
-    require_once("import.php");
+    include '../connect.php';
+
+    $sql = "SELECT * FROM quizis.quiz_Quiz where date > '".date("Y")."-".date("m")."-".date("d")."'  order by date ASC limit 1";
+    $result = $conn->query($sql);
+    $quiz = mysqli_fetch_assoc($result);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -52,31 +57,118 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="contact-form" style="background: #fbe6da">
-                    <h3>Aanmelden</h3>
+                <?php if (isset($_POST['persons_unr'])): ?>
+                    <p>
+                        <?php
+                            $amount = 3 * $_POST['persons_unr'];
+                            $desc = urlencode($_POST['name']);
+                            echo "<strong>Teamnaam</strong>: ".$_POST['name']."<br/>";
+                            echo "<strong>Aantal</strong>: ".$_POST['persons_unr']." personen<br/>";
+                            echo "<strong>Bedrag</strong>: &euro;".$amount."<br />";
+                        ?>
+                        <br/>
+                        <a href="https://www.bunq.me/quiz/<?php echo $amount; ?>/<?php echo $desc; ?>"><button type="submit" name="persons" value="2" class="btn btn-primary" style="background-color: #c95b1f; border-color: #c95b1f">Betaal via deze button</button></a>
+                    </p>
+                <?php elseif (isset($_POST['persons'])): ?>
+                    <?php
+                         $sql = "SELECT id, name, captain, paid FROM quiz_Team WHERE id = ".$_POST['teamid']." ORDER BY name ASC";
+                         $result = $conn->query($sql);
+                         $team = mysqli_fetch_assoc($result);
+                    ?>
+                    <p>
+                        <?php
+                            $amount = 3 * $_POST['persons'];
+                            $desc = urlencode($team['name']);
+                            echo "<strong>Teamnaam</strong>: ".$team['name']."<br/>";
+                            echo "<strong>Captain</strong>: ".$team['captain']."<br/>";
+                            echo "<strong>Aantal</strong>: ".$_POST['persons']." personen<br/>";
+                            echo "<strong>Bedrag</strong>: &euro;".$amount."<br />";
+                        ?>
+                        <br/>
+                        <a href="https://www.bunq.me/quiz/<?php echo $amount; ?>/<?php echo $desc; ?>"><button type="submit" name="persons" value="2" class="btn btn-primary" style="background-color: #c95b1f; border-color: #c95b1f">Betaal via deze button</button></a>
+                    </p>
+                <?php elseif (isset($_POST['team_selected'])): ?>
+                    <?php
+                        $sql = "SELECT id, name, captain, paid FROM quiz_Team WHERE id = ".$_POST['teamname']." ORDER BY name ASC";
+                        $result = $conn->query($sql);
+                        $team = mysqli_fetch_assoc($result);
 
-                    <form id="main-contact-form-2" name="contact-form" method="post" action="../register.php">
-                        <div class="form-group">
+                        if ($team['paid'] == "1") {
+                            ?>
+                            <h3>Jullie hebben al betaald! Veel plezier</h3>
+                            <?php
+                        } else {
+                            ?>
+                            <h3>Aantal personen</h3>
+                            <form id="team-selection" name="team-selection" method="post" action="/aanmelden/index.php">
+                                <input type="hidden" name="teamid" value="<?php echo $team['id']; ?>"/>
+                            <button type="submit" name="persons" value="2" class="btn btn-primary" style="background-color: #c95b1f; border-color: #c95b1f">2</button>
+                            &nbsp;&nbsp;
+                            <button type="submit" name="persons" value="3" class="btn btn-primary" style="background-color: #c95b1f; border-color: #c95b1f">3</button>
+                            &nbsp;&nbsp;
+                            <button type="submit" name="persons" value="4" class="btn btn-primary" style="background-color: #c95b1f; border-color: #c95b1f">4</button>
+                            &nbsp;&nbsp;
+                            <button type="submit" name="persons" value="5" class="btn btn-primary" style="background-color: #c95b1f; border-color: #c95b1f">5</button>
+                            </form>
+
+                            <?php
+                        }
+                    ?>
+                <?php elseif (isset($_POST['unregistered'])): ?>
+                    <form id="main-contact-form-2" name="contact-form" method="post" action="/aanmelden/index.php">
+                            <div class="form-group">
+                                <input type="text" name="name" class="form-control" placeholder="Teamnaam" required>
+                            </div>
+                            <div class="form-group">
+                                <select name="persons_unr" class="form-control">
+                                    <option value="5">5 personen</option>
+                                    <option value="4">4 personen</option>
+                                    <option value="3">3 personen</option>
+                                    <option value="2">2 personen</option>
+                                </select>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="background-color: #c95b1f; border-color: #c95b1f">Verzenden</button>
+                        </form>
+
+                <?php elseif (isset($_POST['registered'])): ?>
+                    <?php
+                        $sql = "SELECT id, name, captain FROM quiz_Team WHERE quiz_quiz_id = ".$quiz['id']." ORDER BY name ASC";
+
+                        $result = $conn->query($sql);
+                        
+                        $teams = [];
+                        while($row = mysqli_fetch_assoc($result)){
+                            $teams[$row['id']] = $row['name']." (".$row['captain'].")";
+                        }
+                    ?>
+
+                    <form id="team-selection" name="team-selection" method="post" action="/aanmelden/index.php">
+                    <div class="form-group">
                             <label for="teamname-selector">Team naam</label>
                             <select id="teamname-selector" name="teamname" class="form-control" required>
+                                <option value="0">--- kies team</option>
                                 <?php
-                                    foreach($teams as $team):
+                                    foreach($teams as $id => $team):
                                 ?>
-                                    <option value="<?php echo $team; ?>"><?php echo $team; ?></option>
+                                    <option value="<?php echo $id; ?>"><?php echo $team; ?></option>
                                 <?php
                                     endforeach
                                 ?>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label for="teamsize-selector">Aantal teamleden</label>
-                            <select id="teamsize-selector" name="teamsize" class="form-control" required>
-                                <option value="4">4</option>
-                                <option value="3">3</option>
-                                <option value="2">2</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary" style="background-color: #c95b1f; border-color: #c95b1f">Aanmelden & betalen</button>
+                        <button type="submit" name="team_selected" class="btn btn-primary" style="background-color: #c95b1f; border-color: #c95b1f">Dit is mijn team!</button>
                     </form>
+                <?php else: ?>
+                    <h3>Had je al ingeschreven voor de quiz?</h3>
+
+                    <form id="signup-form" name="contact-form" method="post" action="/aanmelden/index.php">
+                        <button type="submit" name="registered" class="btn btn-primary"  style="background-color: #c95b1f; border-color: #c95b1f; width:100px;">Ja</button>
+
+                        <br /><br/>
+                        <button type="submit" name="unregistered" class="btn btn-primary" style="background-color: #c95b1f; border-color: #c95b1f; width:100px;">Nee</button>
+                    </form>
+                <?php endif ?>    
                 </div>
             </div>
         </div>
