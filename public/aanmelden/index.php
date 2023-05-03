@@ -160,7 +160,7 @@
                         <button type="submit" name="team_selected" class="btn btn-primary" style="background-color: #c95b1f; border-color: #c95b1f">Dit is mijn team!</button>
                     </form>
                 <?php else: ?>
-                    <h3>Had je al ingeschreven voor de quiz?</h3>
+                    <h3>Online ingeschreven via quizis.nl?</h3>
 
                     <form id="signup-form" name="contact-form" method="post" action="/aanmelden/index.php">
                         <button type="submit" name="registered" class="btn btn-primary"  style="background-color: #c95b1f; border-color: #c95b1f; width:100px;">Ja</button>
