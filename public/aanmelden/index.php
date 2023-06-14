@@ -70,7 +70,7 @@
                             echo "<strong>Bedrag</strong>: &euro;".$amount."<br />";
                         ?>
                         <br/>
-                        <a href="https://www.bunq.me/quiz/<?php echo $amount; ?>/<?php echo $desc; ?>"><button type="submit" name="persons" value="2" class="btn btn-primary" style="background-color: #c95b1f; border-color: #c95b1f">Betaal via deze button</button></a>
+                        <a href="https://www.bunq.me/quiz/<?php echo $amount; ?>/<?php echo $desc; ?>/ideal"><button type="submit" name="persons" value="2" class="btn btn-primary" style="background-color: #c95b1f; border-color: #c95b1f">Betaal via deze button</button></a>
                     </p>
                 <?php elseif (isset($_POST['persons'])): ?>
                     <?php
@@ -88,7 +88,7 @@
                             echo "<strong>Bedrag</strong>: &euro;".$amount."<br />";
                         ?>
                         <br/>
-                        <a href="https://www.bunq.me/quiz/<?php echo $amount; ?>/<?php echo $desc; ?>"><button type="submit" name="persons" value="2" class="btn btn-primary" style="background-color: #c95b1f; border-color: #c95b1f">Betaal via deze button</button></a>
+                        <a href="https://www.bunq.me/quiz/<?php echo $amount; ?>/<?php echo $desc; ?>/ideal"><button type="submit" name="persons" value="2" class="btn btn-primary" style="background-color: #c95b1f; border-color: #c95b1f">Betaal via deze button</button></a>
                     </p>
                 <?php elseif (isset($_POST['team_selected'])): ?>
                     <?php
