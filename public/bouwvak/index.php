@@ -31,7 +31,7 @@
             </div>
           <?php endif ?>
         <?php else: ?>
-          <form action="bouwvak/check.php" method="post">
+          <form action="check.php" method="post">
             <div class="mb-3">
               <label for="number" class="form-label">Baksteen nummer:</label>
               <input type="text" class="form-control" name="number" id="number" placeholder="voer hier nummer in" required>
