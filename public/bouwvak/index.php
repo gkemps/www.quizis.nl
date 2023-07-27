@@ -19,6 +19,9 @@
             <div class="alert alert-danger" role="alert">
               Er is helaas geen prijs voor nummer <?php echo $_GET['number']; ?>
             </div>
+            <div>
+              <a href="https://www.quizis.nl/bouwvak">Terug</a>
+            </div>
           <?php else: ?>
             <div class="alert alert-success" role="alert">
               Gewonnen prijs: <u><?php echo $_GET['prize']; ?></u>.<br/><br/>Gefeliciteerd!
