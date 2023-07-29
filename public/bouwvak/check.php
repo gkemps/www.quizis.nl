@@ -40,7 +40,7 @@ if (isset($_POST['number'])) {
 
   $prize = updateUser($connection, $id);
 
-  header("location: https://www.quizis.nl/bouwvak?number={$_POST['number']}&prize=$prize");
+  header("location: https://www.quizis.nl/bouwvak/number_check.php?number={$_POST['number']}&prize=$prize");
 }
 
 // Close the database connection
