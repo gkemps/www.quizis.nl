@@ -21,6 +21,7 @@
             </div>
             <div>
               <a href="/bouwvak/number_check.php">Nog een nummer checken</a>
+              <br />
               <a href="/bouwvak">Terug</a>
             </div>
           <?php else: ?>
@@ -32,6 +33,7 @@
             </div>
             <div>
               <a href="/bouwvak/number_check.php">Nog een nummer checken</a>
+              <br />
               <a href="/bouwvak">Terug</a>
             </div>
           <?php endif ?>
