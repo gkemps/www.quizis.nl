@@ -21,7 +21,7 @@
             <li>Prijs gewonnen?</li>
             <ul>
                 <li>Ja: gefeliciteerd! Neem je prijs in ontvangst bij de prijzentafel.<br />
-                    Alleen de prijs die correspondeert met je nummer, <b><u>niet ruilen</b></u>!!
+                    Alleen de prijs die correspondeert met je nummer, <b><u>niet ruilen</b></u> en <b><u>precies 1 item</b></u> meegeven
 </li>
                 <li>Nee: helaas ... maar volgende wedstrijd weer een kans!
             </ul>
