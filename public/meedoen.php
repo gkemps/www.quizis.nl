@@ -14,7 +14,7 @@ $quizId = $conn->real_escape_string($_POST['quizId']);
 $sql = "INSERT INTO quiz_Team (name, captain, email, quiz_quiz_id, dateCreated)
 VALUES ('{$teamname}', '{$teamcaptain}', '{$email}', $quizId, NOW())";
 
-$message = implode(";", $_POST,);
+$message = implode(";", $_POST);
 
 $headers = 'From: server@sjenkie.nl' . "\r\n" .
     'Reply-To: server@sjenkie.nl' . "\r\n" .
