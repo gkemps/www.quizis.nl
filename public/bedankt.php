@@ -57,7 +57,7 @@
                 <div class="col-sm-12 text-center">
                     <h2>Bedankt voor jullie inschrijving!</h2>
                     <div class="display-4">Teambijdrage van &euro;15 mag je alvast voldoen <a href="https://www.bunq.me/quiz/15/<?php echo $_GET['team'] . "-" . $_GET['captain']; ?>">via deze link</a>. Betalen op de avond zelf mag natuurlijk ook.</div>
-                    <div class="display-4">Graag tot woensdag 13 september 20:00uur</div>
+                    <div class="display-4">Graag tot woensdag 11 oktober 20:00uur</div>
                 </div>
             </div>
         </div>
