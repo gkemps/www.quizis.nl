@@ -16,16 +16,8 @@ VALUES ('{$teamname}', '{$teamcaptain}', '{$email}', $quizId, NOW())";
 
 $message = implode(";", $_POST);
 
-$headers = 'From: server@sjenkie.nl' . "\r\n" .
-    'Reply-To: server@sjenkie.nl' . "\r\n" .
-    'Return-Path: server@sjenkie.nl' . "\r\n" .
-    'X-Mailer: PHP/' . phpversion();
-mail("info@quizis.nl", "Meedoen", $message, $headers, "-f server@sjenkie.nl");
-
 if (!$conn->query($sql)) {
-    $message = sprintf("Errormessage: %s\n(%s)\n(%s)\n", $conn->error, implode(";", $_REQUEST), $sql);
-    mail('info@quizis.nl', "oeps bij meedoen quiz!", $message, $headers, "-f server@sjenkie.nl");
-    die("Oeps, er ging iets fout ({$conn->error}). Probeer het later nog een keer.");
+    die("Oeps, er ging iets fout. Probeer het later nog een keer.");
 }
 $conn->close();
 
