@@ -31,7 +31,7 @@ FROM
     quizis.quiz_Team AS t
         LEFT JOIN
     quizis.quiz_Quiz AS q ON t.quiz_quiz_id = q.id
-    where t.quiz_quiz_id in (136,137,138) and paid = 1";
+    where t.quiz_quiz_id in (156,157) and paid = 1";
 
 $result = $conn->query($sql);
 
@@ -45,6 +45,7 @@ while($row = $result->fetch_array(MYSQLI_ASSOC)) {
     try {
         $mail->clearAddresses();
         $mail->addAddress($row['email']);
+        //$mail->addAddress('oirschot9@gmail.com');
         $mail->Body = $message;
         $mail->AltBody = sprintf("Bedankt voor jullie inschrijving als team %s voor %s. Tot ziens in het Winterparadijs!", $row['name'], $row['quiz_name']." ".$row['date']);
 
@@ -62,6 +63,8 @@ while($row = $result->fetch_array(MYSQLI_ASSOC)) {
     }
 
     $i++;
+    // if ($i > 1)
+    //     die('temp exit');
 }
 
 $conn->close();
