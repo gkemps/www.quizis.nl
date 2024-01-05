@@ -1,3 +1,28 @@
+<?php
+    include "../connect.php";
+
+    $sql = "SELECT * FROM quiz_Quiz WHERE quiz_Location_id = 1 AND date > NOW() ORDER BY date ASC LIMIT 1";
+
+    // check for errors
+    if (!$result = $conn->query($sql)) {
+        die("Error: " . $conn->error . " (Query: $sql)");
+    }
+    
+
+    if ($result->num_rows > 0) {
+        $quiz = $result->fetch_assoc();
+    } else {
+        die("Geen quiz gevonden");
+    }
+
+    $date = new DateTime($quiz['date']);
+    // subtract 30 minutes
+    $date->sub(new DateInterval('PT30M'));
+    // format
+    $formatter = new \IntlDateFormatter('nl_NL', \IntlDateFormatter::SHORT, \IntlDateFormatter::SHORT);
+    $formatter->setPattern('EEEE d LLLL HH:mm');
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -53,7 +78,7 @@
                         </div>
                         <div class="media-body">
                             <h4 class="media-heading">We gaan weer quizzen!</h4>
-                            <p>Woensdag 13 december 20:00 uur</p>
+                            <p><?php echo ucfirst($formatter->format($date)." uur"); ?></p>
                         </div>
                     </div>
 
@@ -73,7 +98,7 @@
                         </div>
                         <div class="media-body">
                             <h4 class="media-heading">Bijdrage per team</h4>
-                            <p>15 euro per team (3 euro pp), te betalen online of op de avond zelf</p>
+                            <p>20 euro per team (4 euro pp), te betalen online of op de avond zelf</p>
                         </div>
                     </div>
                 </div>
@@ -94,7 +119,7 @@
                                 <input type="email" name="email" class="form-control" placeholder="Email adres"
                                     required>
                             </div>
-                            <input type="hidden" name="quizId" value="155" />
+                            <input type="hidden" name="quizId" value="<?php echo $quiz['id']; ?>" />
                             <button type="submit" class="btn btn-primary"
                                 style="background-color: #c95b1f; border-color: #c95b1f">Verzenden</button>
                         </form>
