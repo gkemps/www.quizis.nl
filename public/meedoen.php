@@ -14,8 +14,6 @@ $quizId = $conn->real_escape_string($_POST['quizId']);
 $sql = "INSERT INTO quiz_Team (name, captain, email, quiz_quiz_id, dateCreated)
 VALUES ('{$teamname}', '{$teamcaptain}', '{$email}', $quizId, NOW())";
 
-$message = implode(";", $_POST);
-
 if (!$conn->query($sql)) {
     die("Oeps, er ging iets fout. Probeer het later nog een keer.");
 }
