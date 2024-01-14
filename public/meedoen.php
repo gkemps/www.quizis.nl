@@ -6,6 +6,13 @@ require '../secrets.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+
+// Create a logger instance
+$log = new Logger('www.quizis.nl');
+$log->pushHandler(new StreamHandler('logs/app.log', Logger::DEBUG));
+
 if (empty($_POST['name'])) {
     header('Location: http://www.quizis.nl/er-ging-iets-mis.html');
     die("post error");
@@ -22,6 +29,7 @@ $sql = "INSERT INTO quiz_Team (name, captain, email, quiz_quiz_id, teamId, dateC
 VALUES ('{$teamname}', '{$teamcaptain}', '{$email}', $quizId, '{$guid}', NOW())";
 
 if (!$conn->query($sql)) {
+    $log->error("Error: " . $sql . "<br>" . $conn->error);
     die("Oeps, er ging iets fout. Probeer het later nog een keer.");
 }
 
@@ -29,6 +37,7 @@ if (!$conn->query($sql)) {
 $sql = "SELECT LAST_INSERT_ID() AS id";
 $result = $conn->query($sql);
 if (!$result) {
+    $log->error("Error: " . $sql . "<br>" . $conn->error);
     die("Oeps, er ging iets fout. Probeer het later nog een keer.");
 }
 
@@ -36,6 +45,7 @@ if (!$result) {
 $sql = "SELECT * FROM quiz_Team WHERE id = {$result->fetch_assoc()['id']}";
 $result = $conn->query($sql);
 if (!$result) {
+    $log->error("Error: " . $sql . "<br>" . $conn->error);
     die("Oeps, er ging iets fout. Probeer het later nog een keer.");
 }
 $subscription = $result->fetch_assoc();
@@ -44,6 +54,7 @@ $subscription = $result->fetch_assoc();
 $sql = "SELECT * FROM quiz_Quiz WHERE id = {$quizId}";
 $result = $conn->query($sql);
 if (!$result) {
+    $log->error("Error: " . $sql . "<br>" . $conn->error);
     die("Oeps, er ging iets fout. Probeer het later nog een keer.");
 }
 $quiz = $result->fetch_assoc();
@@ -52,6 +63,7 @@ $quiz = $result->fetch_assoc();
 $sql = "SELECT * FROM quiz_Location WHERE id = {$quiz['quiz_Location_id']}";
 $result = $conn->query($sql);
 if (!$result) {
+    $log->error("Error: " . $sql . "<br>" . $conn->error);
     die("Oeps, er ging iets fout. Probeer het later nog een keer.");
 }
 $location = $result->fetch_assoc();
@@ -114,6 +126,7 @@ try {
     $mail->setFrom('no-reply@quizis.nl', 'Quizis');
     $mail->addReplyTo('info@quizis.nl', 'Quizis');
 } catch(Exception $e) {
+    $log->error("Erro setting php mailer addresses: " . $e->getMessage());
     die('error setting phpmailer addresses: '.$e->getMessage());
 }
 $message = file_get_contents("templates/confirmation.html");
@@ -141,7 +154,7 @@ try {
         $updateResult = $conn->query($sqlUpdate);
     }
 } catch (Exception $e) {
-    // @todo log error
+    $log->error("Error sending mail: " . $e->getMessage());
 }
 
 $conn->close();
