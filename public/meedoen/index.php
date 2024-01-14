@@ -1,26 +1,56 @@
 <?php
     include "../connect.php";
 
-    $sql = "SELECT * FROM quiz_Quiz WHERE quiz_Location_id = 1 AND date > NOW() ORDER BY date ASC LIMIT 1";
+    // select quiz
+    if (isset($_SERVER['PATH_INFO'])) {
+        $quizCode = substr($_SERVER['PATH_INFO'], 1);
+        $sql = "SELECT * FROM quiz_Quiz WHERE code = '{$quizCode}' AND date > NOW() ORDER BY date ASC LIMIT 1";
+    } else {
+        $sql = "SELECT * FROM quiz_Quiz WHERE quiz_Location_id = 1 AND date > NOW() ORDER BY date ASC LIMIT 1";
+    }
 
-    // check for errors
     if (!$result = $conn->query($sql)) {
         die("Error: " . $conn->error . " (Query: $sql)");
     }
     
-
     if ($result->num_rows > 0) {
         $quiz = $result->fetch_assoc();
     } else {
         die("Geen quiz gevonden");
     }
 
+    // select location
+    $sql = "SELECT * FROM quiz_Location WHERE id = {$quiz['quiz_Location_id']}";
+    
+    if (!$result = $conn->query($sql)) {
+        die("Error: " . $conn->error . " (Query: $sql)");
+    }
+    $location = $result->fetch_assoc();
+
     $date = new DateTime($quiz['date']);
-    // subtract 30 minutes
-    $date->sub(new DateInterval('PT30M'));
     // format
     $formatter = new \IntlDateFormatter('nl_NL', \IntlDateFormatter::SHORT, \IntlDateFormatter::SHORT);
-    $formatter->setPattern('EEEE d LLLL HH:mm');
+    $formatter->setPattern('EE d LLL HH:mm');
+
+    $when = ucfirst($formatter->format($date)." uur");
+
+    $payPerTeam = !empty($quiz['pricePerTeam']);
+    $payPerPerson = !empty($quiz['pricePerPerson']);
+    $maxTeamSize = !empty($quiz['maxTeamSize']) ? $quiz['maxTeamSize'] : 5;
+    $prepay = !empty($quiz['prepay']);
+    $amount = $payPerTeam ? $quiz['pricePerTeam'] : ($payPerPerson ? $quiz['pricePerPerson'] * $maxTeamSize : 0);
+
+    if ($prepay && $payPerTeam) {
+        $payment = "{$amount} euro per team, betalen via iDeal";
+    } else if ($prepay && $payPerPerson) {
+        $payment = "max {$amount} euro per team ({$quiz['pricePerPerson']} euro pp), betalen via iDeal";
+    } else if ($payPerTeam) {
+        $payment = "{$amount} euro per team, online via iDeal of op de avond zelf";
+    } else if ($payPerPerson) {
+        $payment = "max {$amount} euro per team ({$quiz['pricePerPerson']} euro pp), online via iDeal of op de avond zelf";
+    } else {
+        $payment = "gratis";
+    }
 ?>
 
 <!DOCTYPE html>
@@ -77,8 +107,8 @@
                             <i class="fa fa-bullhorn"></i>
                         </div>
                         <div class="media-body">
-                            <h4 class="media-heading">We gaan weer quizzen!</h4>
-                            <p><?php echo ucfirst($formatter->format($date)." uur"); ?></p>
+                            <h4 class="media-heading"><?php echo $quiz['name']; ?></h4>
+                            <p><?php echo $when . " @ " . $location['name']; ?></p>
                         </div>
                     </div>
 
@@ -97,8 +127,8 @@
                             <i class="fa fa-euro"></i>
                         </div>
                         <div class="media-body">
-                            <h4 class="media-heading">Bijdrage per team</h4>
-                            <p>20 euro per team (4 euro pp), te betalen online of op de avond zelf</p>
+                            <h4 class="media-heading">Bijdrage</h4>
+                            <p><?php echo $payment; ?></p>
                         </div>
                     </div>
                 </div>
