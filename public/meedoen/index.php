@@ -67,7 +67,7 @@
     <!-- core CSS -->
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="../css/animate.min.css" rel="stylesheet">a
+    <link href="../css/animate.min.css" rel="stylesheet">
     <link href="../css/owl.carousel.css" rel="stylesheet">
     <link href="../css/owl.transitions.css" rel="stylesheet">
     <link href="../css/prettyPhoto.css" rel="stylesheet">
