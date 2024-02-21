@@ -11,7 +11,7 @@ use Monolog\Handler\StreamHandler;
 
 // Create a logger instance
 $log = new Logger('www.quizis.nl');
-$log->pushHandler(new StreamHandler('logs/app.log', Logger::DEBUG));
+$log->pushHandler(new StreamHandler('../logs/app.log', Logger::DEBUG));
 
 if (empty($_POST['name'])) {
     $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https' : 'http';
