@@ -49,7 +49,7 @@
     } else if ($payPerPerson) {
         $payment = "max {$amount} euro per team ({$quiz['pricePerPerson']} euro pp), online via iDeal of op de avond zelf";
     } else {
-        $payment = "gratis";
+        $payment = "gratis!";
     }
 ?>
 
@@ -117,8 +117,8 @@
                             <i class="fa fa-exclamation"></i>
                         </div>
                         <div class="media-body">
-                            <h4 class="media-heading">5 personen per team</h4>
-                            <p>Maximaal 5(!) personen per team</p>
+                            <h4 class="media-heading"><?php echo $quiz['maxTeamMembers']; ?> personen per team</h4>
+                            <p>Maximaal <?php echo $quiz['maxTeamMembers']; ?>(!) personen per team</p>
                         </div>
                     </div>
 
@@ -151,7 +151,7 @@
                             </div>
                             <input type="hidden" name="quizId" value="<?php echo $quiz['id']; ?>" />
                             <button type="submit" class="btn btn-primary"
-                                style="background-color: #c95b1f; border-color: #c95b1f">Verzenden</button>
+                                style="background-color: #c95b1f; border-color: #c95b1f">Bevestigen</button>
                         </form>
                     </div>
                 </div>
