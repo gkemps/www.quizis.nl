@@ -63,7 +63,7 @@
                 <?php if (isset($_POST['persons_unr'])): ?>
                     <p>
                         <?php
-                            $amount = 3 * $_POST['persons_unr'];
+                            $amount = 4 * $_POST['persons_unr'];
                             $desc = urlencode($_POST['name']);
                             echo "<strong>Teamnaam</strong>: ".$_POST['name']."<br/>";
                             echo "<strong>Aantal</strong>: ".$_POST['persons_unr']." personen<br/>";
@@ -80,7 +80,7 @@
                     ?>
                     <p>
                         <?php
-                            $amount = 3 * $_POST['persons'];
+                            $amount = 4 * $_POST['persons'];
                             $desc = urlencode($team['name']);
                             echo "<strong>Teamnaam</strong>: ".$team['name']."<br/>";
                             echo "<strong>Captain</strong>: ".$team['captain']."<br/>";
