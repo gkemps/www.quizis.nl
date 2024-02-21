@@ -25,7 +25,7 @@ $teamname = $conn->real_escape_string($_POST['name']);
 $teamcaptain = $conn->real_escape_string($_POST['captain']);
 $email = $conn->real_escape_string($_POST['email']);
 $quizId = $conn->real_escape_string($_POST['quizId']);
-$guid = substr(com_create_guid(), 1, 36);
+$guid = uniqid();
 
 //save subscription
 $sql = "INSERT INTO quiz_Team (name, captain, email, quiz_quiz_id, teamId, dateCreated)
