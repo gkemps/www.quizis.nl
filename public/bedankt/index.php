@@ -53,6 +53,7 @@
     $prepay = !empty($quiz['prepay']);
     $amount = $payPerTeam ? $quiz['pricePerTeam'] : ($payPerPerson ? $quiz['pricePerPerson'] * $maxTeamSize : 0);
     $quizCode = !empty($quiz['code']) ? $quiz['code'] : "Q".$quiz['id'];    
+    $not_free = $payPerTeam || $payPerPerson;
 
     $date = new DateTime($quiz['date']);
     // subtract 30 minutes
@@ -114,38 +115,40 @@
 
                 <div class="col-sm-12 text-center">
                     <h2>Bedankt voor jullie inschrijving!</h2>
-                    <br />
-                    <div class="display-4" style="background-color:#F8DDCF;padding:20px">
-                        <?php if($paid) { ?>
-                            Jullie hebben al betaald, dus dat is alvast geregeld!
-                        <?php } else if($prepay && $payPerTeam) { ?>
-                            We ontvangen de teambijdrage van &euro;<?php echo $amount; ?> graag 
-                            <a href="https://www.bunq.me/quiz/<?php echo $amount; ?>/<?php echo urlencode($quizCode."-".$team['name']."-#".$team['id']); ?>/ideal" target="_blank">via deze link</a>. 
-                            <br /><br />
-                            Daarna ontvang je een bevestiging en is jullie inschrijving defintief.
-                        <?php } else if($prepay && $payPerPerson) { ?>
-                            We ontvangen de bijdrage van <?php echo $quiz['pricePerPerson']; ?> euro pp graag via onderstaande opties:
-                            <br />
-                            <?php for ($i = $maxTeamSize; $i > 2; $i--) { ?>
-                                <a href="https://www.bunq.me/quiz/<?php echo $i * $quiz['pricePerPerson']; ?>/<?php echo urlencode($quizCode."-".$team['name']."-#".$team['id']); ?>/ideal" target="_blank">Wij spelen graag mee met <?php echo $i; ?> personen</a><br />    
+                    <?php if ($not_free): ?>
+                        <br />
+                        <div class="display-4" style="background-color:#F8DDCF;padding:20px">
+                            <?php if($paid) { ?>
+                                Jullie hebben al betaald, dus dat is alvast geregeld!
+                            <?php } else if($prepay && $payPerTeam) { ?>
+                                We ontvangen de teambijdrage van &euro;<?php echo $amount; ?> graag 
+                                <a href="https://www.bunq.me/quiz/<?php echo $amount; ?>/<?php echo urlencode($quizCode."-".$team['name']."-#".$team['id']); ?>/ideal" target="_blank">via deze link</a>. 
+                                <br /><br />
+                                Daarna ontvang je een bevestiging en is jullie inschrijving defintief.
+                            <?php } else if($prepay && $payPerPerson) { ?>
+                                We ontvangen de bijdrage van <?php echo $quiz['pricePerPerson']; ?> euro pp graag via onderstaande opties:
+                                <br />
+                                <?php for ($i = $maxTeamSize; $i > 2; $i--) { ?>
+                                    <a href="https://www.bunq.me/quiz/<?php echo $i * $quiz['pricePerPerson']; ?>/<?php echo urlencode($quizCode."-".$team['name']."-#".$team['id']); ?>/ideal" target="_blank">Wij spelen graag mee met <?php echo $i; ?> personen</a><br />    
+                                <?php } ?>
+                                <br />
+                                Daarna ontvang je een bevestiging en is jullie inschrijving defintief.
+                            <?php } else if($payPerTeam) { ?>
+                                We ontvangen de teambijdrage van &euro;<?php echo $amount; ?> graag 
+                                <a href="https://www.bunq.me/quiz/<?php echo $amount; ?>/<?php echo urlencode($quizCode."-".$team['name']."-#".$team['id']); ?>/ideal" target="_blank">via deze link</a>. 
+                                <br /><br />
+                                <i>Later betalen (zie link in mail) of op de avond zelf mag ook.</i>
+                            <?php } else if($payPerPerson) { ?>
+                                We ontvangen de bijdrage van <?php echo $quiz['pricePerPerson']; ?> euro pp graag via onderstaande opties:
+                                <br />
+                                <?php for ($i = $maxTeamSize; $i > 2; $i--) { ?>
+                                    <a href="https://www.bunq.me/quiz/<?php echo $i * $quiz['pricePerPerson']; ?>/<?php echo urlencode($quizCode."-".$team['name']."-#".$team['id']); ?>/ideal" target="_blank">Wij spelen graag mee met <?php echo $i; ?> personen</a><br />    
+                                <?php } ?>
+                                <br />
+                                <i>Weet je nog niet met hoeveel je bent? Gebruik dan de link in je mail om later te betalen.<br />Betalen op de avond zelf kan ook.</i>
                             <?php } ?>
-                            <br />
-                            Daarna ontvang je een bevestiging en is jullie inschrijving defintief.
-                        <?php } else if($payPerTeam) { ?>
-                            We ontvangen de teambijdrage van &euro;<?php echo $amount; ?> graag 
-                            <a href="https://www.bunq.me/quiz/<?php echo $amount; ?>/<?php echo urlencode($quizCode."-".$team['name']."-#".$team['id']); ?>/ideal" target="_blank">via deze link</a>. 
-                            <br /><br />
-                            <i>Later betalen (zie link in mail) of op de avond zelf mag ook.</i>
-                        <?php } else if($payPerPerson) { ?>
-                            We ontvangen de bijdrage van <?php echo $quiz['pricePerPerson']; ?> euro pp graag via onderstaande opties:
-                            <br />
-                            <?php for ($i = $maxTeamSize; $i > 2; $i--) { ?>
-                                <a href="https://www.bunq.me/quiz/<?php echo $i * $quiz['pricePerPerson']; ?>/<?php echo urlencode($quizCode."-".$team['name']."-#".$team['id']); ?>/ideal" target="_blank">Wij spelen graag mee met <?php echo $i; ?> personen</a><br />    
-                            <?php } ?>
-                            <br />
-                            <i>Weet je nog niet met hoeveel je bent? Gebruik dan de link in je mail om later te betalen.<br />Betalen op de avond zelf kan ook.</i>
-                        <?php } ?>
-                    </div>
+                        </div>
+                    <?php endif; ?>
                     <br />
                     <div class="display-4">
                         <strong>Graag tot <?php echo $formatter->format($date)." uur"; ?> @ <?php echo $location['name']; ?>!</strong>

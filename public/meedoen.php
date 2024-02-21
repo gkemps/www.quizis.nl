@@ -14,7 +14,10 @@ $log = new Logger('www.quizis.nl');
 $log->pushHandler(new StreamHandler('logs/app.log', Logger::DEBUG));
 
 if (empty($_POST['name'])) {
-    header('Location: http://www.quizis.nl/er-ging-iets-mis.html');
+    $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https' : 'http';
+    $url = $protocol.'://'.$_SERVER['HTTP_HOST'] . "/er-ging-iets-mis.html";
+    $log->error("post error");
+    header('Location: '.$url);
     die("post error");
 }
 
@@ -71,7 +74,7 @@ $location = $result->fetch_assoc();
 // quiz specifications
 $payPerTeam = !empty($quiz['pricePerTeam']);
 $payPerPerson = !empty($quiz['pricePerPerson']);
-$maxTeamSize = !empty($quiz['maxTeamSize']) ? $quiz['maxTeamSize'] : 5;
+$maxTeamSize = !empty($quiz['maxTeamMembers']) ? $quiz['maxTeamMembers'] : 5;
 $prepay = !empty($quiz['prepay']);
 $amount = $payPerTeam ? $quiz['pricePerTeam'] : ($payPerPerson ? $quiz['pricePerPerson'] * $maxTeamSize : 0);
 
@@ -79,16 +82,16 @@ $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https' : '
 $url = $protocol.'://'.$_SERVER['HTTP_HOST'] . "/bedankt/{$subscription['teamId']}";
 
 //payment text
-$paymentText = "";
+$paymentText = "Deelname is gratis!";
 if ($prepay) {
     if ($payPerTeam) {
         $paymentText = "Deelname is {$amount} euro per team en mocht je dat nog niet hebben voldaan, 
-        dan mag dat via <a href=\"{$url}\">deze link</a>. Je ontvangt een definitie bevestiging zodra 
+        dan mag dat via <a href=\"{$url}\">deze link</a>. Je ontvangt een definitieve bevestiging zodra 
         je betaling is ontvangen";
     } else if ($payPerPerson) {
         $paymentText = "Deelname is {$amount} euro per team ({$quiz['pricePerPerson']} euro pp) en mocht 
         je dat nog niet hebben voldaan, dan mag dat via <a href=\"{$url}\">deze link</a>. Je ontvangt een 
-        definitie bevestiging zodra je betaling is ontvangen";
+        definitieve bevestiging zodra je betaling is ontvangen";
     }
 } else {
     if ($payPerTeam) {
@@ -98,9 +101,7 @@ if ($prepay) {
     } else if ($payPerPerson) {
         $paymentText = "Deelname is {$amount} euro per team ({$quiz['pricePerPerson']} euro pp) en mocht 
         je dat nog niet hebben voldaan, dan mag dat via <a href=\"{$url}\">deze link</a>. Betalen op de avond
-        zelf mag ook, maar vooraf betalen wordt gewaardeerd.<br />
-        <br />
-        Later mensen nog toevoegen aan je team? Ook dat kan via <a href=\"{$url}\">deze link</a>.";
+        zelf mag ook, maar vooraf betalen wordt gewaardeerd.";
     }
 }
 
