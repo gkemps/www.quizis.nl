@@ -122,7 +122,7 @@ $mail->Port = 465;
 $mail->isHTML(true);
 $mail->CharSet = 'UTF-8';
 $mail->Encoding = 'base64';
-$mail->Subject = 'Inschrijving Quizis Pubquiz';
+$mail->Subject = 'Inschrijving Pubquiz: '.$quiz['name'];
 try {
     $mail->setFrom('no-reply@quizis.nl', 'Quizis');
     $mail->addReplyTo('info@quizis.nl', 'Quizis');
@@ -130,6 +130,7 @@ try {
     $log->error("Erro setting php mailer addresses: " . $e->getMessage());
     die('error setting phpmailer addresses: '.$e->getMessage());
 }
+$mail->addBcc("inschrijven@quizis.nl");
 $message = file_get_contents("templates/confirmation.html");
 $message = str_replace("*|QUIZ|*", $quiz['name'], $message);
 $message = str_replace("*|WHEN|*", $formatter->format($date). " uur @ " . $location['name'], $message);
