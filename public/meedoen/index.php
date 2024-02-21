@@ -2,7 +2,7 @@
     include "../connect.php";
 
     // select quiz
-    if (isset($_SERVER['PATH_INFO'])) {
+    if (isset($_SERVER['PATH_INFO']) && !empty($_SERVER['PATH_INFO'])) {
         $quizCode = substr($_SERVER['PATH_INFO'], 1);
         $sql = "SELECT * FROM quiz_Quiz WHERE code = '{$quizCode}' AND date > NOW() ORDER BY date ASC LIMIT 1";
     } else {
