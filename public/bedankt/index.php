@@ -1,9 +1,15 @@
 <?php
     include "../connect.php";
 
-    if (isset($_SERVER['PATH_INFO'])) {
-        $teamCode = substr($_SERVER['PATH_INFO'], 1);
-    } else {
+    $teamCode = "";
+    if (isset($_SERVER['REQUEST_URI']) && !empty($_SERVER['REQUEST_URI'])) {
+        $path = explode("/", $_SERVER['REQUEST_URI']);
+        if (count($path) > 2) {
+            $teamCode = $path[count($path) - 1];
+        }
+    } 
+    
+    if(empty($teamCode)) {
         die("geen team gevonden");
     }
 

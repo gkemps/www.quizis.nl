@@ -2,11 +2,17 @@
     include "../connect.php";
 
     // select quiz
-    if (isset($_SERVER['PATH_INFO']) && !empty($_SERVER['PATH_INFO'])) {
-        $quizCode = substr($_SERVER['PATH_INFO'], 1);
-        $sql = "SELECT * FROM quiz_Quiz WHERE code = '{$quizCode}' AND date > NOW() ORDER BY date ASC LIMIT 1";
-    } else {
-        $sql = "SELECT * FROM quiz_Quiz WHERE quiz_Location_id = 1 AND date > NOW() ORDER BY date ASC LIMIT 1";
+    $quizcode = "";
+    if (isset($_SERVER['REQUEST_URI']) && !empty($_SERVER['REQUEST_URI'])) {
+        $path = explode("/", $_SERVER['REQUEST_URI']);
+        if (count($path) > 2) {
+            $quizcode = $path[count($path) - 1];
+        }
+    }
+
+    $sql = "SELECT * FROM quiz_Quiz WHERE quiz_Location_id = 1 AND date > NOW() ORDER BY date ASC LIMIT 1";
+    if ($quizcode != "") {
+        $sql = "SELECT * FROM quiz_Quiz WHERE code = '{$quizcode}' AND date > NOW() ORDER BY date ASC LIMIT 1";
     }
 
     if (!$result = $conn->query($sql)) {
