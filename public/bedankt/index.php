@@ -61,10 +61,8 @@
     $quizCode = !empty($quiz['code']) ? $quiz['code'] : "Q".$quiz['id'];    
     $not_free = $payPerTeam || $payPerPerson;
 
+    //date formatter
     $date = new DateTime($quiz['date']);
-    // subtract 30 minutes
-    $date->sub(new DateInterval('PT30M'));
-    // format
     $formatter = new \IntlDateFormatter('nl_NL', \IntlDateFormatter::SHORT, \IntlDateFormatter::SHORT);
     $formatter->setPattern('EEEE d LLLL HH:mm');
 ?>
