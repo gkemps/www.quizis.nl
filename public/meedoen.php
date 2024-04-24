@@ -15,9 +15,9 @@ $log->pushHandler(new StreamHandler('../logs/app.log', Logger::DEBUG));
 
 if (empty($_POST['name'])) {
     $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https' : 'http';
-    $url = $protocol.'://'.$_SERVER['HTTP_HOST'] . "/er-ging-iets-mis.html";
+    $url = $protocol . '://' . $_SERVER['HTTP_HOST'] . "/er-ging-iets-mis.html";
     $log->error("post error");
-    header('Location: '.$url);
+    header('Location: ' . $url);
     die("post error");
 }
 
@@ -79,7 +79,7 @@ $prepay = !empty($quiz['prepay']);
 $amount = $payPerTeam ? $quiz['pricePerTeam'] : ($payPerPerson ? $quiz['pricePerPerson'] * $maxTeamSize : 0);
 
 $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https' : 'http';
-$url = $protocol.'://'.$_SERVER['HTTP_HOST'] . "/bedankt/{$subscription['teamId']}";
+$url = $protocol . '://' . $_SERVER['HTTP_HOST'] . "/bedankt/{$subscription['teamId']}";
 
 //payment text
 $paymentText = "Deelname is gratis!";
@@ -113,6 +113,7 @@ $formatter->setPattern('EEEE d LLLL HH:mm');
 //send mail
 $mail = new PHPMailer(true);
 $mail->isSMTP();
+$mail->SMTPDebug = true;
 $mail->Host = 'pixel.mxrouting.net';
 $mail->SMTPAuth = true;
 $mail->Username = 'no-reply@quizis.nl';
@@ -122,18 +123,18 @@ $mail->Port = 465;
 $mail->isHTML(true);
 $mail->CharSet = 'UTF-8';
 $mail->Encoding = 'base64';
-$mail->Subject = 'Inschrijving Pubquiz: '.$quiz['name'];
+$mail->Subject = 'Inschrijving Pubquiz: ' . $quiz['name'];
 try {
     $mail->setFrom('no-reply@quizis.nl', 'Quizis');
     $mail->addReplyTo('info@quizis.nl', 'Quizis');
-} catch(Exception $e) {
+} catch (Exception $e) {
     $log->error("Erro setting php mailer addresses: " . $e->getMessage());
-    die('error setting phpmailer addresses: '.$e->getMessage());
+    die('error setting phpmailer addresses: ' . $e->getMessage());
 }
 $mail->addBcc("inschrijven@quizis.nl");
 $message = file_get_contents("templates/confirmation.html");
 $message = str_replace("*|QUIZ|*", $quiz['name'], $message);
-$message = str_replace("*|WHEN|*", $formatter->format($date). " uur @ " . $location['name'], $message);
+$message = str_replace("*|WHEN|*", $formatter->format($date) . " uur @ " . $location['name'], $message);
 $message = str_replace("*|PAYMENTTEXT|*", $paymentText, $message);
 $message = str_replace("*|TEAMNAME|*", $subscription['name'], $message);
 $message = str_replace("*|TEAMCAPTAIN|*", $subscription['captain'], $message);
@@ -144,15 +145,15 @@ try {
     $mail->addAddress($subscription['email']);
     $mail->Body = $message;
     $mail->AltBody = sprintf(
-        "Bedankt voor jullie inschrijving als team %s voor %s op %s. Check of jullie betaling al in goede orde is ontvangen via deze link: {$url}", 
-        $subscription['name'], 
+        "Bedankt voor jullie inschrijving als team %s voor %s op %s. Check of jullie betaling al in goede orde is ontvangen via deze link: {$url}",
+        $subscription['name'],
         $quiz['name'],
-        $formatter->format($date). " uur"
+        $formatter->format($date) . " uur"
     );
 
     $mailResult = $mail->send();
     if ($mailResult) {
-        $sqlUpdate = "UPDATE quiz_Team SET paid = 0 where id = ".$subscription['id'];
+        $sqlUpdate = "UPDATE quiz_Team SET paid = 0 where id = " . $subscription['id'];
         $updateResult = $conn->query($sqlUpdate);
     }
 } catch (Exception $e) {
@@ -162,6 +163,6 @@ try {
 $conn->close();
 
 $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https' : 'http';
-$url = $protocol.'://'.$_SERVER['HTTP_HOST'] . "/bedankt/{$subscription['teamId']}";
+$url = $protocol . '://' . $_SERVER['HTTP_HOST'] . "/bedankt/{$subscription['teamId']}";
 
 header("Location: $url");
