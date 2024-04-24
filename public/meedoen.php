@@ -113,7 +113,6 @@ $formatter->setPattern('EEEE d LLLL HH:mm');
 //send mail
 $mail = new PHPMailer(true);
 $mail->isSMTP();
-$mail->SMTPDebug = true;
 $mail->Host = 'pixel.mxrouting.net';
 $mail->SMTPAuth = true;
 $mail->Username = 'no-reply@quizis.nl';
