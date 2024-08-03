@@ -184,12 +184,14 @@
                         const square = document.createElement("div");
                         square.classList.add("square");
                         square.textContent = i;
-                        if (data[i] == 'win') {
+                        if (data[i].status == 'win') {
                             square.classList.add("green");
                             square.textContent = "🥳";
-                        } else if (data[i] == 'lose') {
+                            square.setAttribute("title", data[i].id + ": " + data[i].prize + ' (' + data[i].opened + ')');
+                        } else if (data[i].status == 'lose') {
                             square.classList.add("red");
                             square.textContent = "❌";
+                            square.setAttribute("title", data[i].id + ": " + ' ' + data[i].opened);
                         }
                         square.addEventListener("click", function () {
                             if (square.classList.contains("green") || square.classList.contains("red")) {

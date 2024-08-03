@@ -20,11 +20,11 @@ $action = $_GET['action'];
 
 if ($action == 'check') {
     // Check the prize status of all squares
-    $sql = "SELECT * FROM bonanza_squares";
+    $sql = "SELECT s.id as id, status, p.prize as prize, opened FROM bonanza_squares s LEFT JOIN bonanza_prizes p ON s.prize = p.id";
     $result = $conn->query($sql);
     $squares = array();
     while ($row = $result->fetch_assoc()) {
-        $squares[$row['id']] = $row['status'];
+        $squares[$row['id']] = ['status' => $row['status'], 'id' => $row['id'], 'prize' => $row['prize'], 'opened' => $row['opened']];
     }
     echo json_encode($squares);
 } elseif ($action == 'open') {
