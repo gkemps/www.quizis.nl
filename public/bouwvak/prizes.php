@@ -70,7 +70,7 @@ if ($action == 'check') {
         exit();
     }
 
-    $sql = "SELECT id, prize, description FROM bonanza_prizes WHERE (validFrom IS NULL OR validFrom > NOW()) AND id NOT IN (SELECT prize FROM bonanza_squares WHERE status = 'win') ORDER BY RAND() LIMIT 1";
+    $sql = "SELECT id, prize, description FROM bonanza_prizes WHERE (validFrom IS NULL OR validFrom < NOW()) AND id NOT IN (SELECT prize FROM bonanza_squares WHERE status = 'win') ORDER BY RAND() LIMIT 1";
     $result = $conn->query($sql);
     $prizes = array();
     while ($row = $result->fetch_assoc()) {
