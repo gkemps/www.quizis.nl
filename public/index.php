@@ -1,3 +1,26 @@
+<?php
+// fetch future quiz dates
+include "connect.php";
+
+$sql = "SELECT * FROM quiz_Quiz WHERE quiz_Location_id = 1 AND private = 0 AND date > NOW() ORDER BY date ASC";
+if (!$result = $conn->query($sql)) {
+    die("Error: " . $conn->error . " (Query: $sql)");
+}
+
+$quiz_dates = [];
+while ($row = $result->fetch_assoc()) {
+    $date = new DateTime($row['date']);
+    // format
+    $formatter = new \IntlDateFormatter('nl_NL', \IntlDateFormatter::SHORT, \IntlDateFormatter::SHORT);
+    $formatter->setPattern('d MMMM');
+
+    $quiz_dates[] = $formatter->format($date);
+}
+
+$conn->close();
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -68,14 +91,16 @@
                         <div class="row">
                             <div class="col-sm-6" style="width: 100%; text-align: right">
                                 <div class="carousel-content">
-                                    <h2>
-                                        11 september<br />
-                                        9 oktober<br />
-                                        20 november<br />
-                                        11 december<br />
-                                        <br />
-                                        <u><span><a href="/meedoen">Inschrijven!</a></span></u>
-                                    </h2>
+                                    <?php if (count($quiz_dates) > 0) { ?>
+                                        <h2>
+                                            <?php
+                                            print implode("<br />", $quiz_dates);
+                                            ?>
+                                            <br />
+                                            <br />
+                                            <u><span><a href="/meedoen">Inschrijven!</a></span></u>
+                                        </h2>
+                                    <?php } ?>
                                 </div>
                             </div>
                         </div>
