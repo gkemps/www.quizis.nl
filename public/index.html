@@ -1,8 +1,3 @@
-<?php
-
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,13 +47,13 @@
 
                 <div class="collapse navbar-collapse navbar-right">
                     <ul class="nav navbar-nav">
-                        <!-- <li class="scroll active"><a href="#home">Home</a></li>
+                        <li class="scroll active"><a href="#home">Home</a></li>
                         <li class="scroll"><a href="#features">Mogelijkheden</a></li>
-                        <li class="scroll"><a href="#services">Hoe werkt het?</a></li> -->
+                        <li class="scroll"><a href="#services">Hoe werkt het?</a></li>
                         <!--<li class="scroll"><a href="#portfolio">Agenda</a></li>-->
-                        <!-- <li class="scroll"><a href="#pricing">Prijzen</a></li> -->
+                        <li class="scroll"><a href="#pricing">Prijzen</a></li>
                         <!--<li class="scroll"><a href="#blog">Inschrijven</a></li>-->
-                        <!-- <li class="scroll"><a href="#contact">Contact</a></li> -->
+                        <li class="scroll"><a href="#contact">Contact</a></li>
                     </ul>
                 </div>
             </div><!--/.container-->
@@ -67,7 +62,7 @@
 
     <section id="main-slider">
         <div class="owl-carousel">
-            <div class="item" style="background-image: url(images/ek2024/goed-stel.jpg);">
+            <div class="item" style="background-image: url(images/slider/gezellige_pubquiz_oirsprong.png);">
                 <div class="slider-inner">
                     <div class="container">
                         <div class="row">
@@ -79,24 +74,43 @@
                     </div>
                 </div>
             </div><!--/.item-->
-            <div class="item" style="background-image: url(images/ek2024/wissel-robben.jfif);">
+            <div class="item" style="background-image: url(images/slider/slider-winterparadijs-2009.jpg);">
                 <div class="slider-inner">
                     <div class="container">
                         <div class="row">
                             <div class="col-sm-6" style="width: 100%;">
                                 <div class="carousel-content" style="width: 100%; text-align: right">
+                                    <h2>
+                                        Quizzen @ <span>Winterparadijs</span>
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <br />
+                                    </h2>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div><!--/.item-->
-            <div class="item" style="background-image: url(images/ek2024/hans-van-breukelen.jfif);">
+            <div class="item" style="background-image: url(images/slider/ob.jpg);">
                 <div class="slider-inner">
                     <div class="container">
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="carousel-content">
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <h2><span>Top2000</span> Quiz<br />
+                                        Bruin Cafe Oud Brabant
+                                        <br />
+                                        <br />
+                                    </h2>
                                 </div>
                             </div>
                         </div>
@@ -110,94 +124,51 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-9">
-                    <h2>"Dit is een goed stel hoor"</h2>
-                    <p>Welke TV-commentator zei dit over het Nederlands elftal na de EK finale '88?
+                    <h2>Omdat er altijd reden voor een Quiz is</h2>
+                    <p>Een pubquiz in je favoriete kroeg. Je collega's verslaan op het personeelsfeest. Of je familie
+                        uitdagen op dat weekendje weg. Quizis verzorgt leuke, uitdagende quizzen met vragen in allerlei
+                        vormen en maten komende uit verschillende categorieën. We denken graag met je mee om jouw eigen
+                        PubQuiz tot een succes te maken. Vraag je offerte bij ons aan, of kijk wanneer het weer Quizis.
                     </p>
-                    <p>
-                        <a id="answer-a" class="btn btn-primary btn-lg">A. Herman Kuiphof</a>
-                        <a id="answer-b" class="btn btn-primary btn-lg">B. Evert ten Napel</a>
-                        <a id="answer-c" class="btn btn-primary btn-lg">C. Theo Reitsma</a>
-                        <a id="answer-d" class="btn btn-primary btn-lg">D. Hugo Walker</a>
-                    </p>
-                    <p><a href="/?q=2">Andere vraag spelen?</a></p>
                 </div>
-                <!-- <div class="col-sm-3 text-right">
-                    <a class="btn btn-primary btn-lg" href="#features">Meer Quizzen?</a>
-                </div> -->
+                <div class="col-sm-3 text-right">
+                    <a class="btn btn-primary btn-lg" href="#features">Meer weten</a>
+                </div>
             </div>
         </div>
-    </section>
-
-    <script>
-        // above we have 4 buttons, button A B C & D. 
-        // button C is the correct answer
-        // the other buttons reflect wrong answers
-        // create a javascript script that will turn the button green if the correct answer is clicked
-        // and red if the wrong answer is clicked
-        // the correct answer is C
-        // the wrong answers are A, B and D
-
-        // create a function that will change the color of the button
-        // the function will take 2 arguments, the button and the color
-        function changeColor(button, color) {
-            // change the background color of the button
-            button.style.backgroundColor = color;
-        }
-
-        // get the buttons
-        var buttonA = document.getElementById('answer-a');
-        var buttonB = document.getElementById('answer-b');
-        var buttonC = document.getElementById('answer-c');
-        var buttonD = document.getElementById('answer-d');
-
-        // add an event listener to the buttons
-        buttonA.addEventListener('click', function () {
-            // if the button is clicked, change the color to red
-            changeColor(buttonA, 'red');
-        });
-
-        buttonB.addEventListener('click', function () {
-            // if the button is clicked, change the color to red
-            changeColor(buttonB, 'red');
-        });
-
-        buttonC.addEventListener('click', function () {
-            // if the button is clicked, change the color to green
-            changeColor(buttonC, 'green');
-        });
-
-        buttonD.addEventListener('click', function () {
-            // if the button is clicked, change the color to red
-            changeColor(buttonD, 'red');
-        });
-    </script>
+    </section><!--/#cta-->
 
     <section id="features">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title text-center wow fadeInDown">Vaker quizzen?</h2>
+                <h2 class="section-title text-center wow fadeInDown">Quiz Mogelijkheden</h2>
+                <p class="text-center wow fadeInDown">Quiszis verzorgt wekelijks/maandelijkse quizzen in cafés, maar
+                    heeft ook ervaring met het organiseren van een geslaagde quiz op een personeelsfeest, familieweekend
+                    of verenigingsuitje. Wij denken graag met je mee en komen samen met jou tot een voorstel op maat.
+                    Alles is mogelijk.</p>
             </div>
             <div class="row">
-                <div class="col-sm-12">
+                <div class="col-sm-6 wow fadeInLeft">
+                    <img class="img-responsive" src="images/custom/logo_quizis_large.png" alt="">
+                </div>
+                <div class="col-sm-6">
                     <div class="media service-box wow fadeInRight">
                         <div class="pull-left">
                             <i class="fa fa-comment-o"></i>
                         </div>
                         <div class="media-body">
                             <h4 class="media-heading">Pubquiz</h4>
-                            <p>Iedere maand een pubquiz bij Brouwerij Vandeoirsprong. <a
-                                    href="https://quizis.nl/meedoen">Schrijf je</a> in voor 26 juni</p>
+                            <p>Een wekelijkse of maandelijkse quiz in je favoriete kroeg.</p>
                         </div>
                     </div>
 
                     <div class="media service-box wow fadeInRight">
                         <div class="pull-left">
-                            <i class="fa fa-users"></i>
+                            <i class="fa fa-magic"></i>
                         </div>
                         <div class="media-body">
-                            <h4 class="media-heading">Personeelsfeest</h4>
-                            <p>Quiz voor je bedrijf of familiedag? Vraag een <a href="mailto:info@quizis.nl">offerte</a>
-                                aan!</p>
+                            <h4 class="media-heading">Quiz op maat</h4>
+                            <p>Quiz volledig op maat. Vragen uit je eigen regio, sport, sector of cultuur.</p>
                         </div>
                     </div>
 
@@ -207,8 +178,27 @@
                         </div>
                         <div class="media-body">
                             <h4 class="media-heading">Thema quiz</h4>
-                            <p>Quiz in een thema naar keuze. Geheel over sport (of het EK!), film of toch het afgelopen
-                                jaar.</p>
+                            <p>Quiz in een thema naar keuze. Geheel over sport, film of toch het afgelopen jaar.</p>
+                        </div>
+                    </div>
+
+                    <div class="media service-box wow fadeInRight">
+                        <div class="pull-left">
+                            <i class="fa fa-industry"></i>
+                        </div>
+                        <div class="media-body">
+                            <h4 class="media-heading">Personeelsfeest</h4>
+                            <p>Daag je collega's uit die het altijd beter weten tijdens je bedrijfsuitje.</p>
+                        </div>
+                    </div>
+
+                    <div class="media service-box wow fadeInRight">
+                        <div class="pull-left">
+                            <i class="fa fa-users"></i>
+                        </div>
+                        <div class="media-body">
+                            <h4 class="media-heading">Familie weekend</h4>
+                            <p>Versla die ene irritante oom en laat zien dat jij de slimste bent van de familie.</p>
                         </div>
                     </div>
 
@@ -228,7 +218,7 @@
     <!--</div>-->
     <!--</section>-->
 
-    <!-- <section id="work-process">
+    <section id="work-process">
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title text-center wow fadeInDown">QUIZIS: Compleet verzorgde avond</h2>
@@ -292,7 +282,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section><!--/#work-process-->
 
     <section id="services">
         <div class="container">
@@ -315,7 +305,7 @@
                                     diverse audiofragmenten.</p>
                             </div>
                         </div>
-                    </div>
+                    </div><!--/.col-md-4-->
 
                     <div class="col-md-4 col-sm-6 wow fadeInUp" data-wow-duration="300ms" data-wow-delay="200ms">
                         <div class="media service-box">
@@ -327,7 +317,7 @@
                                 <p>Een PubQuiz team bestaat uit 2 tot 5 personen. Ieder team aan een eigen tafel.</p>
                             </div>
                         </div>
-                    </div><
+                    </div><!--/.col-md-4-->
 
                     <div class="col-md-4 col-sm-6 wow fadeInUp" data-wow-duration="300ms" data-wow-delay="300ms">
                         <div class="media service-box">
@@ -340,7 +330,7 @@
                                     prijsuitreiking.</p>
                             </div>
                         </div>
-                    </div>
+                    </div><!--/.col-md-4-->
 
                     <div class="col-md-4 col-sm-6 wow fadeInUp" data-wow-duration="300ms" data-wow-delay="400ms">
                         <div class="media service-box">
@@ -353,7 +343,7 @@
                                     kroeg, de voetbal kantine, op kantoor of op iedere locatie naar keuze.</p>
                             </div>
                         </div>
-                    </div>
+                    </div><!--/.col-md-4-->
 
                     <div class="col-md-4 col-sm-6 wow fadeInUp" data-wow-duration="300ms" data-wow-delay="500ms">
                         <div class="media service-box">
@@ -366,7 +356,7 @@
                                     telefoons en andere hulplijnen zijn niet toegestaan.</p>
                             </div>
                         </div>
-                    </div>
+                    </div><!--/.col-md-4-->
 
                     <div class="col-md-4 col-sm-6 wow fadeInUp" data-wow-duration="300ms" data-wow-delay="100ms">
                         <div class="media service-box">
@@ -381,11 +371,11 @@
                                 </p>
                             </div>
                         </div>
-                    </div>
+                    </div><!--/.col-md-4-->
                 </div>
-            </div>
-        </div>
-    </section> -->
+            </div><!--/.row-->
+        </div><!--/.container-->
+    </section><!--/#services-->
 
     <!--<section id="portfolio">-->
     <!--<div class="container">-->
@@ -736,7 +726,7 @@
     <!--</div>-->
     <!--</section>&lt;!&ndash;/#meet-team&ndash;&gt;-->
 
-    <!-- <section id="animated-number">
+    <section id="animated-number">
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title text-center wow fadeInDown">Voorbeeld vragen</h2>
@@ -747,10 +737,37 @@
                 <h4 class="text-center wow fadeInDown">
                     Welke voetbalclub speelt zijn wedstrijden op Selhurst Park?</h4>
             </div>
-        </div>
-    </section> -->
 
-    <!-- <section id="pricing">
+            <!--<div class="row text-center">-->
+            <!--<div class="col-sm-3 col-xs-6">-->
+            <!--<div class="wow fadeInUp" data-wow-duration="400ms" data-wow-delay="0ms">-->
+            <!--<div class="animated-number" data-digit="2305" data-duration="1000"></div>-->
+            <!--<strong>CUPS OF COFFEE CONSUMED</strong>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--<div class="col-sm-3 col-xs-6">-->
+            <!--<div class="wow fadeInUp" data-wow-duration="400ms" data-wow-delay="100ms">-->
+            <!--<div class="animated-number" data-digit="1231" data-duration="1000"></div>-->
+            <!--<strong>CLIENT WORKED WITH</strong>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--<div class="col-sm-3 col-xs-6">-->
+            <!--<div class="wow fadeInUp" data-wow-duration="400ms" data-wow-delay="200ms">-->
+            <!--<div class="animated-number" data-digit="3025" data-duration="1000"></div>-->
+            <!--<strong>PROJECT COMPLETED</strong>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--<div class="col-sm-3 col-xs-6">-->
+            <!--<div class="wow fadeInUp" data-wow-duration="400ms" data-wow-delay="300ms">-->
+            <!--<div class="animated-number" data-digit="1199" data-duration="1000"></div>-->
+            <!--<strong>QUESTIONS ANSWERED</strong>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--</div>-->
+        </div>
+    </section><!--/#animated-number-->
+
+    <section id="pricing">
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title text-center wow fadeInDown">Prijzen</h2>
@@ -869,7 +886,7 @@
                 </div>
             </div>
         </div>
-    </section> -->
+    </section><!--/#pricing-->
 
     <!--<section id="testimonial">-->
     <!--<div class="container">-->
