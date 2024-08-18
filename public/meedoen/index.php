@@ -1,62 +1,78 @@
 <?php
-    include "../connect.php";
+include "../connect.php";
 
-    // select quiz
-    $quizcode = "";
-    if (isset($_SERVER['REQUEST_URI']) && !empty($_SERVER['REQUEST_URI'])) {
-        $path = explode("/", $_SERVER['REQUEST_URI']);
-        if (count($path) > 2) {
-            $quizcode = $path[count($path) - 1];
-        }
+// select quiz
+$quizcode = "";
+if (isset($_SERVER['REQUEST_URI']) && !empty($_SERVER['REQUEST_URI'])) {
+    $path = explode("/", $_SERVER['REQUEST_URI']);
+    if (count($path) > 2) {
+        $quizcode = $path[count($path) - 1];
     }
+}
 
-    $sql = "SELECT * FROM quiz_Quiz WHERE quiz_Location_id = 1 AND private = 0 AND date > NOW() ORDER BY date ASC LIMIT 1";
-    if ($quizcode != "") {
-        $sql = "SELECT * FROM quiz_Quiz WHERE code = '{$quizcode}' AND date > NOW() ORDER BY date ASC LIMIT 1";
-    }
+$sql = "SELECT * FROM quiz_Quiz WHERE quiz_Location_id = 1 AND private = 0 AND date > NOW() ORDER BY date ASC LIMIT 1";
+if ($quizcode != "") {
+    $sql = "SELECT * FROM quiz_Quiz WHERE code = '{$quizcode}' AND date > NOW() ORDER BY date ASC LIMIT 1";
+}
 
-    if (!$result = $conn->query($sql)) {
-        die("Error: " . $conn->error . " (Query: $sql)");
-    }
-    
-    if ($result->num_rows > 0) {
-        $quiz = $result->fetch_assoc();
-    } else {
-        die("Geen quiz gevonden");
-    }
+if (!$result = $conn->query($sql)) {
+    die("Error: " . $conn->error . " (Query: $sql)");
+}
 
-    // select location
-    $sql = "SELECT * FROM quiz_Location WHERE id = {$quiz['quiz_Location_id']}";
-    
-    if (!$result = $conn->query($sql)) {
-        die("Error: " . $conn->error . " (Query: $sql)");
-    }
-    $location = $result->fetch_assoc();
+if ($result->num_rows > 0) {
+    $quiz = $result->fetch_assoc();
+} else {
+    die("Geen quiz gevonden");
+}
 
-    $date = new DateTime($quiz['date']);
+// select location
+$sql = "SELECT * FROM quiz_Location WHERE id = {$quiz['quiz_Location_id']}";
+
+if (!$result = $conn->query($sql)) {
+    die("Error: " . $conn->error . " (Query: $sql)");
+}
+$location = $result->fetch_assoc();
+
+$date = new DateTime($quiz['date']);
+// format
+$formatter = new \IntlDateFormatter('nl_NL', \IntlDateFormatter::SHORT, \IntlDateFormatter::SHORT);
+$formatter->setPattern('EE d LLL HH:mm');
+
+$when = ucfirst($formatter->format($date) . " uur");
+
+$payPerTeam = !empty($quiz['pricePerTeam']);
+$payPerPerson = !empty($quiz['pricePerPerson']);
+$maxTeamSize = !empty($quiz['maxTeamSize']) ? $quiz['maxTeamSize'] : 5;
+$prepay = !empty($quiz['prepay']);
+$amount = $payPerTeam ? $quiz['pricePerTeam'] : ($payPerPerson ? $quiz['pricePerPerson'] * $maxTeamSize : 0);
+
+if ($prepay && $payPerTeam) {
+    $payment = "{$amount} euro per team, betalen via iDeal";
+} else if ($prepay && $payPerPerson) {
+    $payment = "max {$amount} euro per team ({$quiz['pricePerPerson']} euro pp), betalen via iDeal";
+} else if ($payPerTeam) {
+    $payment = "{$amount} euro per team, online via iDeal of op de avond zelf";
+} else if ($payPerPerson) {
+    $payment = "max {$amount} euro per team ({$quiz['pricePerPerson']} euro pp), online via iDeal of op de avond zelf";
+} else {
+    $payment = "gratis!";
+}
+
+// fturue quiz dates at this location
+$sql = sprintf("SELECT * FROM quiz_Quiz WHERE quiz_Location_id = {$quiz['quiz_Location_id']} AND private = 0 AND  date > '%s' ORDER BY date ASC", $quiz['date']);
+if (!$result = $conn->query($sql)) {
+    die("Error: " . $conn->error . " (Query: $sql)");
+}
+
+$futureQuizDates = [];
+while ($row = $result->fetch_assoc()) {
+    $date = new DateTime($row['date']);
     // format
     $formatter = new \IntlDateFormatter('nl_NL', \IntlDateFormatter::SHORT, \IntlDateFormatter::SHORT);
-    $formatter->setPattern('EE d LLL HH:mm');
+    $formatter->setPattern('d MMMM');
 
-    $when = ucfirst($formatter->format($date)." uur");
-
-    $payPerTeam = !empty($quiz['pricePerTeam']);
-    $payPerPerson = !empty($quiz['pricePerPerson']);
-    $maxTeamSize = !empty($quiz['maxTeamSize']) ? $quiz['maxTeamSize'] : 5;
-    $prepay = !empty($quiz['prepay']);
-    $amount = $payPerTeam ? $quiz['pricePerTeam'] : ($payPerPerson ? $quiz['pricePerPerson'] * $maxTeamSize : 0);
-
-    if ($prepay && $payPerTeam) {
-        $payment = "{$amount} euro per team, betalen via iDeal";
-    } else if ($prepay && $payPerPerson) {
-        $payment = "max {$amount} euro per team ({$quiz['pricePerPerson']} euro pp), betalen via iDeal";
-    } else if ($payPerTeam) {
-        $payment = "{$amount} euro per team, online via iDeal of op de avond zelf";
-    } else if ($payPerPerson) {
-        $payment = "max {$amount} euro per team ({$quiz['pricePerPerson']} euro pp), online via iDeal of op de avond zelf";
-    } else {
-        $payment = "gratis!";
-    }
+    $futureQuizDates[] = $formatter->format($date);
+}
 ?>
 
 <!DOCTYPE html>
@@ -137,6 +153,19 @@
                             <p><?php echo $payment; ?></p>
                         </div>
                     </div>
+
+                    <?php if (!empty($futureQuizDates)) { ?>
+                        <div class="media service-box wow fadeInRight">
+                            <div class="pull-left">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <div class="media-body">
+                                <h4 class="media-heading">Zet in je agenda</h4>
+                                <p><?php echo implode(", ", $futureQuizDates); ?></p>
+                            </div>
+                        </div>
+                    <?php } ?>
+
                 </div>
 
                 <div class="col-sm-6">
