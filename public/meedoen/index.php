@@ -5,7 +5,7 @@ include "../connect.php";
 $quizcode = "";
 if (isset($_SERVER['REQUEST_URI']) && !empty($_SERVER['REQUEST_URI'])) {
     $path = explode("/", $_SERVER['REQUEST_URI']);
-    if (count($path) > 2) {
+    if (count($path) > 2 && $path[2][0] != "?") {
         $quizcode = $path[count($path) - 1];
     }
 }
