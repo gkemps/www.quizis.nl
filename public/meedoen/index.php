@@ -73,6 +73,16 @@ while ($row = $result->fetch_assoc()) {
 
     $futureQuizDates[] = $formatter->format($date);
 }
+
+$conn->close();
+
+// check if we have a referer in $_GET or in the $_SERSER global
+$referer = "";
+if (isset($_GET['referer'])) {
+    $referer = $_GET['referer'];
+} else if (isset($_SERVER['HTTP_REFERER'])) {
+    $referer = $_SERVER['HTTP_REFERER'];
+}
 ?>
 
 <!DOCTYPE html>
@@ -185,6 +195,7 @@ while ($row = $result->fetch_assoc()) {
                                     required>
                             </div>
                             <input type="hidden" name="quizId" value="<?php echo $quiz['id']; ?>" />
+                            <input type="hidden" name="referer" value="<?php echo $referer; ?>" />
                             <button type="submit" class="btn btn-primary"
                                 style="background-color: #c95b1f; border-color: #c95b1f">Bevestigen</button>
                         </form>

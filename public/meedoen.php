@@ -26,9 +26,10 @@ $teamcaptain = $conn->real_escape_string($_POST['captain']);
 $email = $conn->real_escape_string($_POST['email']);
 $quizId = $conn->real_escape_string($_POST['quizId']);
 $guid = uniqid();
+$referer = $conn->real_escape_string($_POST['referer']);
 
 //save subscription
-$sql = "INSERT INTO quiz_Team (name, captain, email, quiz_quiz_id, teamId, dateCreated)
+$sql = "INSERT INTO quiz_Team (name, captain, email, quiz_quiz_id, referer, teamId, dateCreated)
 VALUES ('{$teamname}', '{$teamcaptain}', '{$email}', $quizId, '{$guid}', NOW())";
 
 if (!$conn->query($sql)) {
