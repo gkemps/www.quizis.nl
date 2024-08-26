@@ -30,7 +30,7 @@ $referer = $conn->real_escape_string($_POST['referer']);
 
 //save subscription
 $sql = "INSERT INTO quiz_Team (name, captain, email, quiz_quiz_id, referer, teamId, dateCreated)
-VALUES ('{$teamname}', '{$teamcaptain}', '{$email}', $quizId, '{$guid}', NOW())";
+VALUES ('{$teamname}', '{$teamcaptain}', '{$email}', $quizId, '{$referer}', '{$guid}', NOW())";
 
 if (!$conn->query($sql)) {
     $log->error("Error: " . $sql . "<br>" . $conn->error);
