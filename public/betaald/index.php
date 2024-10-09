@@ -1,4 +1,5 @@
 <?php
+
 include "../connect.php";
 require '../../vendor/autoload.php';
 require '../../secrets.php';
@@ -26,24 +27,29 @@ if (empty($teamId)) {
     die("request error: no teamId provided by webhook");
 }
 
-$paymentId = $conn->real_escape_string($_POST['id']);
+$paymentLinkId = $conn->real_escape_string($_POST['id']);
 
 // fetch payment at Mollie
 $mollie = new \Mollie\Api\MollieApiClient();
 $mollie->setApiKey(MOLLIE_API_KEY);
 
 try {
-    $log->info("fetching payment: {$paymentId}");
-    # log entire request:
-    $log->info("request: " . json_encode($_REQUEST));
-    # log entire post:
-    $log->info("post: " . json_encode($_POST));
-    $payment = $mollie->payments->get($paymentId);
+    $log->info("fetching payment Link : {$paymentLinkId}");
+    $paymentLink = $mollie->paymentLinks->get($paymentLinkId);
 } catch (\Mollie\Api\Exceptions\ApiException $e) {
     // return 422 bad request
     http_response_code(422);
     $log->error("Mollie API error: " . $e->getMessage());
-    die("Mollie API error: " . $e->getMessage());
+    die("Mollie API error x: " . $e->getMessage());
+}
+
+$payments = $paymentLink->payments();
+$payment = null;
+foreach ($payments as $p) {
+    if ($p->status === "paid") {
+        $payment = $p;
+        break;
+    }
 }
 
 if ($payment->status !== "paid") {
