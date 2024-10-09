@@ -33,6 +33,7 @@ $mollie = new \Mollie\Api\MollieApiClient();
 $mollie->setApiKey(MOLLIE_API_KEY);
 
 try {
+    $log->info("fetching payment: {$paymentId}");
     $payment = $mollie->payments->get($paymentId);
 } catch (\Mollie\Api\Exceptions\ApiException $e) {
     // return 422 bad request
