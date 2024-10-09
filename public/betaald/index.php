@@ -34,6 +34,10 @@ $mollie->setApiKey(MOLLIE_API_KEY);
 
 try {
     $log->info("fetching payment: {$paymentId}");
+    # log entire request:
+    $log->info("request: " . json_encode($_REQUEST));
+    # log entire post:
+    $log->info("post: " . json_encode($_POST));
     $payment = $mollie->payments->get($paymentId);
 } catch (\Mollie\Api\Exceptions\ApiException $e) {
     // return 422 bad request
