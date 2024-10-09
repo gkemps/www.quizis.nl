@@ -12,7 +12,7 @@ if (isset($_SERVER['REQUEST_URI']) && !empty($_SERVER['REQUEST_URI'])) {
 
 $sql = "SELECT * FROM quiz_Quiz WHERE quiz_Location_id = 1 AND private = 0 AND date > NOW() ORDER BY date ASC LIMIT 1";
 if ($quizcode != "") {
-    $sql = "SELECT * FROM quiz_Quiz WHERE code = '{$quizcode}' AND date > NOW() ORDER BY date ASC LIMIT 1";
+    $sql = "SELECT * FROM quiz_Quiz WHERE code = '{$quizcode}' AND (date > NOW() OR code = 'test-quiz') ORDER BY date ASC LIMIT 1";
 }
 
 if (!$result = $conn->query($sql)) {

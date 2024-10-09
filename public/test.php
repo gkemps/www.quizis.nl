@@ -1,14 +1,22 @@
 <?php
+require '../vendor/autoload.php';
+require '../secrets.php';
 
-include "connect.php";
+$mollie = new \Mollie\Api\MollieApiClient();
+$mollie->setApiKey(MOLLIE_API_KEY);
 
-$sql = "SELECT * FROM quiz_Quiz";
+$paymentLink = $mollie->paymentLinks->create([
+    "description" => "Test betaling via Mollie via quizis.nl",
+    "amount" => [
+        "currency" => "EUR",
+        "value" => "0.40",
+    ],
+    "redirectUrl" => "https://quizis.nl/bedankt/abc123",
+    "webhookUrl" => "https://quizis.nl/betaald",
+    "expiresAt" => "2025-09-15T11:00:00+00:00",
+]);
 
-$result = $conn->query($sql);
+$url = $paymentLink->getCheckoutUrl();
 
-for ($i = 0; $i < $result->num_rows; $i++) {
-    $row = $result->fetch_assoc();
-    echo $row['name'] . "<br>";
-}
-
-die('done!');
+// print url in html
+echo "<a href='$url'>Betalen via {$url}</a>";

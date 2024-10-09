@@ -80,7 +80,7 @@ $prepay = !empty($quiz['prepay']);
 $amount = $payPerTeam ? $quiz['pricePerTeam'] : ($payPerPerson ? $quiz['pricePerPerson'] * $maxTeamSize : 0);
 
 $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https' : 'http';
-$url = $protocol . '://' . $_SERVER['HTTP_HOST'] . "/bedankt/{$subscription['teamId']}";
+$url = $protocol . '://' . $_SERVER['HTTP_HOST'] . "/team/{$subscription['teamId']}";
 
 //payment text
 $paymentText = "Deelname is gratis!";
@@ -163,6 +163,6 @@ try {
 $conn->close();
 
 $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https' : 'http';
-$url = $protocol . '://' . $_SERVER['HTTP_HOST'] . "/bedankt/{$subscription['teamId']}";
+$url = $protocol . '://' . $_SERVER['HTTP_HOST'] . "/team/{$subscription['teamId']}";
 
 header("Location: $url");
