@@ -52,14 +52,15 @@ foreach ($payments as $p) {
     }
 }
 
-if ($payment->status !== "paid") {
+if ($payment === null) {
     // return 422 bad request
-    $log->error("webhook trigger for unpaid payment: {$paymentId}");
-    die("post error: payment not paid");
+    http_response_code(422);
+    $log->error("error: no paid payment found in payment link: " . json_encode($paymentLink));
+    die("Oeps, er ging iets fout. Probeer het later nog een keer.");
 }
 
 // update team subscription in database
-$sql = "UPDATE quiz_Team SET paid = 1, datePaid = NOW(), amount = amount + {$payment->amount->value} WHERE teamId = '{$teamId}'";
+$sql = "UPDATE quiz_Team SET paid = 1, datePaid = NOW(), amount = COALESCE(amount, 0) + {$payment->amount->value} WHERE teamId = '{$teamId}'";
 
 if (!$conn->query($sql)) {
     // return 422 bad request
