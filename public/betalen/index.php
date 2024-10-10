@@ -39,7 +39,7 @@ if ($result->num_rows > 0) {
 $mollie = new \Mollie\Api\MollieApiClient();
 $mollie->setApiKey(MOLLIE_API_KEY);
 
-$description = "{$quiz['name']} - {$team['name']} #{$team['id']}";
+$description = "{$team['name']} #{$team['id']} - {$quiz['name']}";
 
 // convert amount to valid currency format with 2 decimals
 $amount = number_format($_GET['amount'], 2, '.', '');
