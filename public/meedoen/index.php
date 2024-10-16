@@ -196,7 +196,7 @@ if (isset($_GET['referer'])) {
                             </div>
                             <input type="hidden" name="quizId" value="<?php echo $quiz['id']; ?>" />
                             <input type="hidden" name="referer" value="<?php echo $referer; ?>" />
-                            <button type="submit" class="btn btn-primary"
+                            <button type="submit" class="btn btn-primary" id="btn-submit"
                                 style="background-color: #c95b1f; border-color: #c95b1f">Bevestigen</button>
                         </form>
                     </div>
@@ -228,6 +228,13 @@ if (isset($_GET['referer'])) {
         ga('create', 'UA-73901233-1', 'auto');
         ga('send', 'pageview');
 
+    </script>
+
+    <!-- disable submit button after submit -->
+    <script>
+        document.getElementById('main-contact-form-2').addEventListener('submit', function () {
+            document.getElementById('btn-submit').disabled = true;
+        });
     </script>
 </body>
 
