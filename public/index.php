@@ -763,12 +763,13 @@ $conn->close();
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title text-center wow fadeInDown">Voorbeeld vragen</h2>
-                <h4 class="text-center wow fadeInDown">Welke 4 EU landen hebben maar 1 aangrenzend buurland?</h4>
                 <br />
-                <h4 class="text-center wow fadeInDown">Wat zijn Maki, Nigiri, Oshi en Inari?</h4>
+                <h4 class="text-center wow fadeInDown"> - Welke 4 EU landen hebben maar 1 aangrenzend buurland? - </h4>
                 <br />
-                <h4 class="text-center wow fadeInDown">
-                    Welke voetbalclub speelt zijn wedstrijden op Selhurst Park?</h4>
+                <h4 class="text-center wow fadeInDown"> - Wat zijn Maki, Nigiri, Oshi en Inari? - </h4>
+                <br />
+                <h4 class="text-center wow fadeInDown"> - Welke voetbalclub speelt zijn wedstrijden op Selhurst Park? -
+                </h4>
             </div>
 
             <!--<div class="row text-center">-->
@@ -804,8 +805,9 @@ $conn->close();
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title text-center wow fadeInDown">Prijzen</h2>
-                <p class="text-center wow fadeInDown">Onderstaande prijzen zijn een indicatie. Neem <a
-                        href="#contact">contact</a> met ons op voor meer informatie of een offerte op maat.</p>
+                <p class="text-center wow fadeInDown">Onderstaande prijzen zijn een indicatie en excl BTW. Neem <a
+                        href="mailto:info@quizis.nl">contact</a> met ons op voor meer informatie of een offerte op maat.
+                </p>
             </div>
 
             <div class="row">
@@ -815,24 +817,26 @@ $conn->close();
                             <li class="plan-header">
                                 <div class="price-duration">
                                     <span class="price">
-                                        €65
+                                        <small>va</small> €80
                                     </span>
                                     <span class="duration">
-                                        ex BTW
+                                        &nbsp;
                                     </span>
                                 </div>
 
                                 <div class="plan-name">
-                                    Standaard
+                                    Doe het <br />zelf
                                 </div>
                             </li>
+                            <li><strong>8</strong> RONDES</li>
                             <li><strong>80</strong> VRAGEN</li>
-                            <li><strong>80</strong> ANTWOORDEN</li>
-                            <li><strong>10</strong> FOTO VRAGEN</li>
-                            <li><strong>10</strong> MUZIEK VRAGEN</li>
+                            <li><strong>INC</strong> FOTO & MUZIEK RONDE</li>
+                            <li><strong>&plusmn;2.5</strong> UUR QUIZ PLEZIER</li>
                             <li>ZELF PRESENTEREN</li>
                             <li>ZELF NAKIJKEN</li>
-                            <li class="plan-purchase"><a class="btn btn-primary" href="#contact">BESTEL NU</a></li>
+                            <li class="plan-purchase"><a class="btn btn-primary"
+                                    href="mailto:info@quizis.nl?subject=Offerte Doe Het Zelf">BESTEL
+                                    NU</a></li>
                         </ul>
                     </div>
                 </div>
@@ -842,24 +846,26 @@ $conn->close();
                             <li class="plan-header">
                                 <div class="price-duration">
                                     <span class="price">
-                                        va €99
+                                        €3 pp
                                     </span>
                                     <span class="duration">
-                                        ex BTW
+                                        min. €150
                                     </span>
                                 </div>
 
                                 <div class="plan-name">
-                                    THEMA
+                                    Quiz Master <br />Turbo
                                 </div>
                             </li>
-                            <li><strong>80</strong> VRAGEN</li>
-                            <li><strong>80</strong> ANTWOORDEN</li>
-                            <li><strong>10</strong> FOTO VRAGEN</li>
-                            <li><strong>10</strong> MUZIEK VRAGEN</li>
-                            <li>Geheel in thema</li>
-                            <li>Thema naar keuze</li>
-                            <li class="plan-purchase"><a class="btn btn-primary" href="#contact">BESTEL NU</a></li>
+                            <li><strong>6</strong> RONDES</li>
+                            <li><strong>60</strong> VRAGEN</li>
+                            <li><strong>INC</strong> FOTO & MUZIEK RONDE</li>
+                            <li><strong>&plusmn;1.5</strong> UUR QUIZ PLEZIER</li>
+                            <li>PROFESSIONELE QUIZ MASTER</li>
+                            <li>SNEL KLAAR</li>
+                            <li class="plan-purchase"><a class="btn btn-primary"
+                                    href="mailto:info@quizis.nl?subject=Offerte Quiz Master Turbo">BESTEL
+                                    NU</a></li>
                         </ul>
                     </div>
                 </div>
@@ -869,24 +875,26 @@ $conn->close();
                             <li class="plan-header">
                                 <div class="price-duration">
                                     <span class="price">
-                                        €200
+                                        €4 pp
                                     </span>
                                     <span class="duration">
-                                        ex BTW
+                                        min. €200
                                     </span>
                                 </div>
 
                                 <div class="plan-name">
-                                    Quiz Master
+                                    Quiz Master <br />XXL
                                 </div>
                             </li>
+                            <li><strong>8</strong> RONDES</li>
                             <li><strong>80</strong> VRAGEN</li>
-                            <li><strong>80</strong> ANTWOORDEN</li>
-                            <li><strong>10</strong> FOTO VRAGEN</li>
-                            <li><strong>10</strong> MUZIEK VRAGEN</li>
-                            <li>Professionele begeleiding</li>
-                            <li>Compleet verzorgd</li>
-                            <li class="plan-purchase"><a class="btn btn-default" href="#">BESTEL NU</a></li>
+                            <li><strong>INC</strong> FOTO & MUZIEK RONDE</li>
+                            <li><strong>&plusmn;2.5</strong> UUR QUIZ PLEZIER</li>
+                            <li>PROFESSIONELE QUIZ MASTER</li>
+                            <li>AVOND VULLEND</li>
+                            <li class="plan-purchase"><a class="btn btn-default"
+                                    href="mailto:info@quizis.nl?subject=Offerte Quiz Master XXL">BESTEL
+                                    NU</a></li>
                         </ul>
                     </div>
                 </div>
@@ -899,21 +907,24 @@ $conn->close();
                                         €??
                                     </span>
                                     <span class="duration">
-                                        ex BTW
+                                        &nbsp;
                                     </span>
                                 </div>
 
                                 <div class="plan-name">
-                                    OP MAAT
+                                    OP MAAT <br />
+                                    XXL
                                 </div>
                             </li>
-                            <li>Geheel op maat</li>
+                            <li>GEHEEL OP MAAT</li>
+                            <li>ALLES IN OVERLEG</li>
+                            <li>DIV THEMA'S MOGELIJK</li>
                             <li>&nbsp;</li>
                             <li>&nbsp;</li>
                             <li>&nbsp;</li>
-                            <li>&nbsp;</li>
-                            <li>&nbsp;</li>
-                            <li class="plan-purchase"><a class="btn btn-primary" href="#">BESTEL NU</a></li>
+                            <li class="plan-purchase"><a class="btn btn-primary"
+                                    href="mailto:info@quizis.nl?subject=Offerte Op Maat XXL">BESTEL
+                                    NU</a></li>
                         </ul>
                     </div>
                 </div>
