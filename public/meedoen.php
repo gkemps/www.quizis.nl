@@ -27,10 +27,11 @@ $email = $conn->real_escape_string($_POST['email']);
 $quizId = $conn->real_escape_string($_POST['quizId']);
 $guid = uniqid();
 $referer = $conn->real_escape_string($_POST['referer']);
+$teamMembers = isset($_POST['teamMembers']) ? intval($_POST['teamMembers']) : "NULL";
 
 //save subscription
-$sql = "INSERT INTO quiz_Team (name, captain, email, quiz_quiz_id, referer, teamId, dateCreated)
-VALUES ('{$teamname}', '{$teamcaptain}', '{$email}', $quizId, '{$referer}', '{$guid}', NOW())";
+$sql = "INSERT INTO quiz_Team (name, captain, email, quiz_quiz_id, referer, teamId, teamMembers, dateCreated)
+VALUES ('{$teamname}', '{$teamcaptain}', '{$email}', $quizId, '{$referer}', '{$guid}', {$teamMembers}, NOW())";
 
 if (!$conn->query($sql)) {
     $log->error("Error: " . $sql . "<br>" . $conn->error);
@@ -75,9 +76,9 @@ $location = $result->fetch_assoc();
 // quiz specifications
 $payPerTeam = !empty($quiz['pricePerTeam']);
 $payPerPerson = !empty($quiz['pricePerPerson']);
-$maxTeamSize = !empty($quiz['maxTeamMembers']) ? $quiz['maxTeamMembers'] : 5;
+$maxTeamMembers = !empty($quiz['maxTeamMembers']) ? $quiz['maxTeamMembers'] : 5;
 $prepay = !empty($quiz['prepay']);
-$amount = $payPerTeam ? $quiz['pricePerTeam'] : ($payPerPerson ? $quiz['pricePerPerson'] * $maxTeamSize : 0);
+$amount = $payPerTeam ? $quiz['pricePerTeam'] : ($payPerPerson ? $quiz['pricePerPerson'] * $maxTeamMembers : 0);
 
 $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https' : 'http';
 $url = $protocol . '://' . $_SERVER['HTTP_HOST'] . "/team/{$subscription['teamId']}";
@@ -138,7 +139,7 @@ $message = str_replace("*|WHEN|*", $formatter->format($date) . " uur @ " . $loca
 $message = str_replace("*|PAYMENTTEXT|*", $paymentText, $message);
 $message = str_replace("*|TEAMNAME|*", $subscription['name'], $message);
 $message = str_replace("*|TEAMCAPTAIN|*", $subscription['captain'], $message);
-$message = str_replace("*|MAXTEAMSIZE|*", $maxTeamSize, $message);
+$message = str_replace("*|MAXTEAMMEMBERS|*", $maxTeamMembers, $message);
 
 try {
     $mail->clearAddresses();

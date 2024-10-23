@@ -42,10 +42,11 @@ $when = ucfirst($formatter->format($date) . " uur");
 
 $payPerTeam = !empty($quiz['pricePerTeam']);
 $payPerPerson = !empty($quiz['pricePerPerson']);
-$maxTeamSize = !empty($quiz['maxTeamSize']) ? $quiz['maxTeamSize'] : 5;
+$maxTeamMembers = !empty($quiz['maxTeamMembers']) ? $quiz['maxTeamMembers'] : 5;
 $prepay = !empty($quiz['prepay']);
-$amount = $payPerTeam ? $quiz['pricePerTeam'] : ($payPerPerson ? $quiz['pricePerPerson'] * $maxTeamSize : 0);
+$amount = $payPerTeam ? $quiz['pricePerTeam'] : ($payPerPerson ? $quiz['pricePerPerson'] * $maxTeamMembers : 0);
 
+$free = false;
 if ($prepay && $payPerTeam) {
     $payment = "{$amount} euro per team, betalen via iDeal";
 } else if ($prepay && $payPerPerson) {
@@ -56,6 +57,7 @@ if ($prepay && $payPerTeam) {
     $payment = "max {$amount} euro per team ({$quiz['pricePerPerson']} euro pp), online via iDeal of op de avond zelf";
 } else {
     $payment = "gratis!";
+    $free = true;
 }
 
 // fturue quiz dates at this location
@@ -194,6 +196,17 @@ if (isset($_GET['referer'])) {
                                 <input type="email" name="email" class="form-control" placeholder="Email adres"
                                     required>
                             </div>
+                            <?php if ($free && $maxTeamMembers > 5) { ?>
+                                <div class="form-group">
+                                    <!-- show a select box with numbers 1 to maxTeamMembers -->
+                                    Met hoeveel deelnemers verwacht je (ongeveer) te komen?
+                                    <select name="teamMembers" class="form-control" required>
+                                        <?php for ($i = 1; $i <= $maxTeamMembers; $i++) { ?>
+                                            <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            <?php } ?>
                             <input type="hidden" name="quizId" value="<?php echo $quiz['id']; ?>" />
                             <input type="hidden" name="referer" value="<?php echo $referer; ?>" />
                             <button type="submit" class="btn btn-primary" id="btn-submit"

@@ -55,23 +55,23 @@ if ($result->num_rows > 0) {
 $paid = !empty($team['paid']) && $team['paid'] == 1;
 $payPerTeam = !empty($quiz['pricePerTeam']);
 $payPerPerson = !empty($quiz['pricePerPerson']);
-$maxTeamSize = !empty($quiz['maxTeamSize']) ? $quiz['maxTeamSize'] : 5;
+$maxTeamMembers = !empty($quiz['maxTeamMembers']) ? $quiz['maxTeamMembers'] : 5;
 $prepay = !empty($quiz['prepay']);
-$amount = $payPerTeam ? $quiz['pricePerTeam'] : ($payPerPerson ? $quiz['pricePerPerson'] * $maxTeamSize : 0);
+$amount = $payPerTeam ? $quiz['pricePerTeam'] : ($payPerPerson ? $quiz['pricePerPerson'] * $maxTeamMembers : 0);
 $quizCode = !empty($quiz['code']) ? $quiz['code'] : "Q" . $quiz['id'];
 $not_free = $payPerTeam || $payPerPerson;
 $amountPaid = !empty($team['amount']) ? $team['amount'] : 0;
 $paidForXPersons = 0;
 if ($paid) {
     if ($payPerTeam) {
-        $paidForXPersons = $maxTeamSize;
+        $paidForXPersons = $maxTeamMembers;
     }
     if ($payPerPerson) {
         $paidForXPersons = $amountPaid / $quiz['pricePerPerson'];
     }
 }
 
-$additionalPersons = $maxTeamSize - $paidForXPersons;
+$additionalPersons = $maxTeamMembers - $paidForXPersons;
 $extraPaymentLinks = [];
 for ($i = 1; $i <= $additionalPersons; $i++) {
     $url = "/betalen?amount=" . $i * $quiz['pricePerPerson'] . "&teamId=" . $team['teamId'];
@@ -178,7 +178,7 @@ $formatter->setPattern('EEEE d LLLL HH:mm');
                                         We ontvangen de bijdrage van <?php echo $quiz['pricePerPerson']; ?> euro pp graag via
                                         onderstaande opties:
                                         <br />
-                                <?php for ($i = $maxTeamSize; $i > 1; $i--) { ?>
+                                <?php for ($i = $maxTeamMembers; $i > 1; $i--) { ?>
                                             <a href="/betalen?amount=<?php echo $i * $quiz['pricePerPerson']; ?>&teamId=<?php echo $team['teamId']; ?>"
                                                 target="_blank">Wij spelen graag mee met <?php echo $i; ?> personen</a><br />
                                 <?php } ?>
@@ -194,7 +194,7 @@ $formatter->setPattern('EEEE d LLLL HH:mm');
                                                 We ontvangen de bijdrage van <?php echo $quiz['pricePerPerson']; ?> euro pp graag via
                                                 onderstaande opties:
                                                 <br />
-                                <?php for ($i = $maxTeamSize; $i > 1; $i--) { ?>
+                                <?php for ($i = $maxTeamMembers; $i > 1; $i--) { ?>
                                                     <a href="/betalen?amount=<?php echo $i * $quiz['pricePerPerson']; ?>&teamId=<?php echo $team['teamId']; ?>"
                                                         target="_blank">Wij spelen graag mee met <?php echo $i; ?> personen</a><br />
                                 <?php } ?>
