@@ -21,6 +21,15 @@ if (empty($_POST['name'])) {
     die("post error");
 }
 
+// reverse captcha
+if (!empty($_POST['revcode'])) {
+    $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https' : 'http';
+    $url = $protocol . '://' . $_SERVER['HTTP_HOST'] . "/er-ging-iets-mis.html";
+    $log->error("reverse captcha error: " . print_r($_POST, true));
+    header('Location: ' . $url);
+    die("post error");
+}
+
 $teamname = $conn->real_escape_string($_POST['name']);
 $teamcaptain = $conn->real_escape_string($_POST['captain']);
 $email = $conn->real_escape_string($_POST['email']);

@@ -209,6 +209,7 @@ if (isset($_GET['referer'])) {
                             <?php } ?>
                             <input type="hidden" name="quizId" value="<?php echo $quiz['id']; ?>" />
                             <input type="hidden" name="referer" value="<?php echo $referer; ?>" />
+                            <input type="hidden" name="revcode" value="" />
                             <button type="submit" class="btn btn-primary" id="btn-submit"
                                 style="background-color: #c95b1f; border-color: #c95b1f">Bevestigen</button>
                         </form>
