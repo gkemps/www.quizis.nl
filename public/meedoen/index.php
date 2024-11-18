@@ -195,6 +195,8 @@ if (isset($_GET['referer'])) {
                             <div class="form-group">
                                 <input type="email" name="email" class="form-control" placeholder="Email adres"
                                     required>
+                                <input class="ohnohoning" autocomplete="off" type="text" name="revcode"
+                                    placeholder="Your name here">
                             </div>
                             <?php if ($free && $maxTeamMembers > 5) { ?>
                                 <div class="form-group">
@@ -209,7 +211,6 @@ if (isset($_GET['referer'])) {
                             <?php } ?>
                             <input type="hidden" name="quizId" value="<?php echo $quiz['id']; ?>" />
                             <input type="hidden" name="referer" value="<?php echo $referer; ?>" />
-                            <input type="hidden" name="revcode" value="" />
                             <button type="submit" class="btn btn-primary" id="btn-submit"
                                 style="background-color: #c95b1f; border-color: #c95b1f">Bevestigen</button>
                         </form>
