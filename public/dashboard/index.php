@@ -52,13 +52,16 @@ foreach ($teams as $k => $team) {
     // by deviding the paid amount by the price per person
     $teamMembers = $quiz['maxTeamMembers'];
     if ($team['datePaid'] != null) {
+        $teamMembers = 0;
         if ($quiz['pricePerTeam'] > 0) {
             $teamMembers = $quiz['maxTeamMembers'];
-        } else {
+        } elseif ($quiz['pricePerPerson'] > 0) {
             $teamMembers = $team['amount'] / $quiz['pricePerPerson'];
         }
         $paidMembers += $teamMembers;
         $paidTeams++;
+    } else {
+        $teamMembers = $team['teamMembers'];
     }
     $totalMembers += $teamMembers;
 }
@@ -173,9 +176,15 @@ $stillExpectedTeams = array_filter($stillExpectedTeams, function ($team) use ($t
                         if ($team['datePaid'] != null) {
                             if ($quiz['pricePerTeam'] > 0) {
                                 $teamMembers = $quiz['maxTeamMembers'];
-                            } else {
+                            } elseif ($quiz['pricePerPerson'] > 0) {
                                 $teamMembers = $team['amount'] / $quiz['pricePerPerson'];
                             }
+                        } else {
+                            $teamMembers = $team['teamMembers'];
+                        }
+
+                        if ($teamMembers == 0) {
+                            $teamMembers = $quiz['maxTeamMembers'] . "?";
                         }
 
                         ?>
