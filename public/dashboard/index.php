@@ -12,7 +12,7 @@ if (isset($_SERVER['REQUEST_URI']) && !empty($_SERVER['REQUEST_URI'])) {
 
 $sql = "SELECT * FROM quiz_Quiz WHERE quiz_Location_id = 1 AND private = 0 AND date > NOW() ORDER BY date ASC LIMIT 1";
 if ($quizcode != "") {
-    $sql = "SELECT * FROM quiz_Quiz WHERE code = '{$quizcode}' AND (date > NOW() OR code = 'test-quiz') ORDER BY date ASC LIMIT 1";
+    $sql = "SELECT * FROM quiz_Quiz WHERE code = '{$quizcode}' ORDER BY date ASC LIMIT 1";
 }
 
 if (!$result = $conn->query($sql)) {
@@ -52,7 +52,11 @@ foreach ($teams as $k => $team) {
     // by deviding the paid amount by the price per person
     $teamMembers = $quiz['maxTeamMembers'];
     if ($team['datePaid'] != null) {
-        $teamMembers = $team['amount'] / $quiz['pricePerPerson'];
+        if ($quiz['pricePerTeam'] > 0) {
+            $teamMembers = $quiz['maxTeamMembers'];
+        } else {
+            $teamMembers = $team['amount'] / $quiz['pricePerPerson'];
+        }
         $paidMembers += $teamMembers;
         $paidTeams++;
     }
@@ -167,7 +171,11 @@ $stillExpectedTeams = array_filter($stillExpectedTeams, function ($team) use ($t
                     
                         $teamMembers = $quiz['maxTeamMembers'] . "?";
                         if ($team['datePaid'] != null) {
-                            $teamMembers = $team['amount'] / $quiz['pricePerPerson'];
+                            if ($quiz['pricePerTeam'] > 0) {
+                                $teamMembers = $quiz['maxTeamMembers'];
+                            } else {
+                                $teamMembers = $team['amount'] / $quiz['pricePerPerson'];
+                            }
                         }
 
                         ?>
