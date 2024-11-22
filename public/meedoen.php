@@ -97,12 +97,14 @@ $paymentText = "Deelname is gratis!";
 if ($prepay) {
     if ($payPerTeam) {
         $paymentText = "Deelname is {$amount} euro per team en mocht je dat nog niet hebben voldaan, 
-        dan mag dat via <a href=\"{$url}\">deze link</a>. Je ontvangt een definitieve bevestiging zodra 
-        je betaling is ontvangen";
+        dan mag dat via <a href=\"{$url}\">deze link</a>. Je inschrijving is pas defintief als je betaling
+        binnen is. Dat kun je controleren via <a href=\"{$url}\">deze link</a>. Je ontvangt daar 
+        <strong>geen</strong> aparte bevestiging meer van.";
     } else if ($payPerPerson) {
         $paymentText = "Deelname is {$amount} euro per team ({$quiz['pricePerPerson']} euro pp) en mocht 
-        je dat nog niet hebben voldaan, dan mag dat via <a href=\"{$url}\">deze link</a>. Je ontvangt een 
-        definitieve bevestiging zodra je betaling is ontvangen";
+        je dat nog niet hebben voldaan, dan mag dat via <a href=\"{$url}\">deze link</a>. Je inschrijving is pas defintief als je betaling
+        binnen is. Dat kun je controleren via <a href=\"{$url}\">deze link</a>. Je ontvangt daar 
+        <strong>geen</strong> aparte bevestiging meer van.";
     }
 } else {
     if ($payPerTeam) {

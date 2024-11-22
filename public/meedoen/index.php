@@ -33,13 +33,14 @@ if (!$result = $conn->query($sql)) {
 }
 $location = $result->fetch_assoc();
 
+// format date
 $date = new DateTime($quiz['date']);
-// format
 $formatter = new \IntlDateFormatter('nl_NL', \IntlDateFormatter::SHORT, \IntlDateFormatter::SHORT);
 $formatter->setPattern('EE d LLL HH:mm');
 
 $when = ucfirst($formatter->format($date) . " uur");
 
+// payment
 $payPerTeam = !empty($quiz['pricePerTeam']);
 $payPerPerson = !empty($quiz['pricePerPerson']);
 $maxTeamMembers = !empty($quiz['maxTeamMembers']) ? $quiz['maxTeamMembers'] : 5;
@@ -60,13 +61,14 @@ if ($prepay && $payPerTeam) {
     $free = true;
 }
 
-// fturue quiz dates at this location
-$sql = sprintf("SELECT * FROM quiz_Quiz WHERE quiz_Location_id = {$quiz['quiz_Location_id']} AND private = 0 AND  date > '%s' ORDER BY date ASC", $quiz['date']);
+// future quiz dates at this location
+$sql = "SELECT * FROM quiz_Quiz WHERE id <> {$quiz['id']} AND quiz_Location_id = {$quiz['quiz_Location_id']} AND private = 0 AND  date > NOW() ORDER BY date ASC";
 if (!$result = $conn->query($sql)) {
     die("Error: " . $conn->error . " (Query: $sql)");
 }
 
 $futureQuizDates = [];
+$futureQuizCodes = [];
 while ($row = $result->fetch_assoc()) {
     $date = new DateTime($row['date']);
     // format
@@ -74,9 +76,32 @@ while ($row = $result->fetch_assoc()) {
     $formatter->setPattern('d MMMM');
 
     $futureQuizDates[] = $formatter->format($date);
+    if (!empty($row['code'])) {
+        $futureQuizCodes[$row['code']] = $row['name'];
+    }
 }
 
-$conn->close();
+// registered teams and quiz open/closed for registration
+$maxTeams = $quiz['maxTeams'];
+if ($maxTeams == "") {
+    $maxTeams = 100;
+}
+
+// fetch all registered teams
+$sql = "SELECT * FROM quiz_Team WHERE quiz_quiz_id = {$quiz['id']} ORDER BY id ASC";
+if (!$result = $conn->query($sql)) {
+    die("error: " . $conn->error . " (Query: $sql)");
+}
+
+$teams = [];
+while ($row = $result->fetch_assoc()) {
+    $teams[] = $row;
+}
+
+$nrOfTeams = count($teams);
+$teamsLeft = $maxTeams - $nrOfTeams;
+$percFull = round($nrOfTeams / $maxTeams * 100);
+$open = $nrOfTeams < $maxTeams;
 
 // check if we have a referer in $_GET or in the $_SERSER global
 $referer = "";
@@ -85,6 +110,9 @@ if (isset($_GET['referer'])) {
 } else if (isset($_SERVER['HTTP_REFERER'])) {
     $referer = $_SERVER['HTTP_REFERER'];
 }
+
+// close connection
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -181,40 +209,67 @@ if (isset($_GET['referer'])) {
                 </div>
 
                 <div class="col-sm-6">
-                    <div class="contact-form" style="background: #fbe6da">
-                        <h3>Meedoen!</h3>
-
-                        <form id="main-contact-form-2" name="contact-form" method="post" action="../meedoen.php">
-                            <div class="form-group">
-                                <input type="text" name="name" class="form-control" placeholder="Teamnaam" required>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" name="captain" class="form-control" placeholder="Team captain"
-                                    required>
-                            </div>
-                            <div class="form-group">
-                                <input type="email" name="email" class="form-control" placeholder="Email adres"
-                                    required>
-                                <input class="ohnohoning" autocomplete="off" type="text" name="revcode"
-                                    placeholder="Your name here">
-                            </div>
-                            <?php if ($free && $maxTeamMembers > 5) { ?>
+                    <?php if ($open): ?>
+                        <div class="contact-form" style="background: #fbe6da">
+                            <h3>Meedoen!</h3>
+                            <?php if ($percFull > 50): ?>
+                                <span class="quizis_color">
+                                    <strong>
+                                        <?php if ($percFull > 90): ?>
+                                            Let op: nog maar <?php echo $teamsLeft; ?> plaats(en) beschikbaar!
+                                        <?php elseif ($percFull > 75): ?>
+                                            Let op: nog maar een paar plaatsen beschikbaar!
+                                        <?php else: ?>
+                                            Minder dan de helft van de plaatsen nog beschikbaar!
+                                        <?php endif ?>
+                                    </strong>
+                                </span>
+                            <?php endif ?>
+                            <form id="main-contact-form-2" name="contact-form" method="post" action="../meedoen.php">
                                 <div class="form-group">
-                                    <!-- show a select box with numbers 1 to maxTeamMembers -->
-                                    Met hoeveel deelnemers verwacht je (ongeveer) te komen?
-                                    <select name="teamMembers" class="form-control" required>
-                                        <?php for ($i = 1; $i <= $maxTeamMembers; $i++) { ?>
-                                            <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
-                                        <?php } ?>
-                                    </select>
+                                    <input type="text" name="name" class="form-control" placeholder="Teamnaam" required>
                                 </div>
-                            <?php } ?>
-                            <input type="hidden" name="quizId" value="<?php echo $quiz['id']; ?>" />
-                            <input type="hidden" name="referer" value="<?php echo $referer; ?>" />
-                            <button type="submit" class="btn btn-primary" id="btn-submit"
-                                style="background-color: #c95b1f; border-color: #c95b1f">Bevestigen</button>
-                        </form>
-                    </div>
+                                <div class="form-group">
+                                    <input type="text" name="captain" class="form-control" placeholder="Team captain"
+                                        required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" name="email" class="form-control" placeholder="Email adres"
+                                        required>
+                                    <input class="ohnohoning" autocomplete="off" type="text" name="revcode"
+                                        placeholder="Your name here">
+                                </div>
+                                <?php if ($free && $maxTeamMembers > 5) { ?>
+                                    <div class="form-group">
+                                        <!-- show a select box with numbers 1 to maxTeamMembers -->
+                                        Met hoeveel deelnemers verwacht je (ongeveer) te komen?
+                                        <select name="teamMembers" class="form-control" required>
+                                            <?php for ($i = 1; $i <= $maxTeamMembers; $i++) { ?>
+                                                <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                <?php } ?>
+                                <input type="hidden" name="quizId" value="<?php echo $quiz['id']; ?>" />
+                                <input type="hidden" name="referer" value="<?php echo $referer; ?>" />
+                                <button type="submit" class="btn btn-primary" id="btn-submit"
+                                    style="background-color: #c95b1f; border-color: #c95b1f">Bevestigen</button>
+                            </form>
+                        </div>
+                    <?php else: ?>
+                        <div class="contact-form" style="background: #fbe6da">
+                            <h3>Inschrijving gesloten</h3>
+                            <p>De inschrijving voor deze quiz is helaas gesloten. &#128532;</p>
+                            <?php if (count($futureQuizCodes) > 0): ?>
+                                <p>Misschien kan je nog inschrijven voor een van de volgende quizzen:</p>
+                                <ul>
+                                    <?php foreach ($futureQuizCodes as $code => $name): ?>
+                                        <li><a href="/meedoen/<?php echo $code; ?>"><?php echo $name; ?></a></li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            <?php endif; ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
