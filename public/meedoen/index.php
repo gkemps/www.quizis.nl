@@ -8,6 +8,11 @@ if (isset($_SERVER['REQUEST_URI']) && !empty($_SERVER['REQUEST_URI'])) {
     if (count($path) > 2 && $path[2][0] != "?") {
         $quizcode = $path[count($path) - 1];
     }
+
+    // if quizcode is something like my-code?asdbaedaadrea, remove the part after the ?
+    if (strpos($quizcode, "?") !== false) {
+        $quizcode = substr($quizcode, 0, strpos($quizcode, "?"));
+    }
 }
 
 $sql = "SELECT * FROM quiz_Quiz WHERE quiz_Location_id = 1 AND private = 0 AND date > NOW() ORDER BY date ASC LIMIT 1";
