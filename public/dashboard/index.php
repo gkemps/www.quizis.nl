@@ -60,7 +60,7 @@ foreach ($teams as $k => $team) {
         }
         $paidMembers += $teamMembers;
         $paidTeams++;
-    } else {
+    } elseif ($team['teamMembers'] > 0) {
         $teamMembers = $team['teamMembers'];
     }
     $totalMembers += $teamMembers;

@@ -64,7 +64,7 @@ $conn->close();
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="index.html"><img src="images/custom/logo_quizis.png" alt="logo"
+                    <a class="navbar-brand" href="/"><img src="images/custom/logo_quizis.png" alt="logo"
                             height="60"></a>
                 </div>
 
@@ -98,7 +98,9 @@ $conn->close();
                                             ?>
                                             <br />
                                             <br />
-                                            <u><span><a href="/meedoen">Inschrijven!</a></span></u>
+                                            <span
+                                                style="background-color: #f8f0d3; border-radius: 25px; border: 5px solid #c95a1f; padding: 10px"><a
+                                                    href="/meedoen">Inschrijven!</a></span>
                                         </h2>
                                     <?php } ?>
                                 </div>
@@ -107,42 +109,20 @@ $conn->close();
                     </div>
                 </div>
             </div><!--/.item-->
-            <div class="item" style="background-image: url(images/slider/slider-winterparadijs-2009.jpg);">
-                <div class="slider-inner">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm-6" style="width: 100%;">
-                                <div class="carousel-content" style="width: 100%; text-align: right">
-                                    <h2>
-                                        Quizzen @ <span>Winterparadijs</span>
-                                        <br />
-                                        <br />
-                                        <br />
-                                        <br />
-                                        <br />
-                                        <br />
-                                    </h2>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div><!--/.item-->
-            <div class="item" style="background-image: url(images/slider/ob.jpg);">
+            <div class="item" style="background-image: url(images/slider/slider-winterparadijs-2024.jpg);">
                 <div class="slider-inner">
                     <div class="container">
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="carousel-content">
-                                    <br />
-                                    <br />
-                                    <br />
-                                    <br />
-                                    <br />
-                                    <h2><span>Top2000</span> Quiz<br />
-                                        Bruin Cafe Oud Brabant
+                                    <h2>
                                         <br />
                                         <br />
+                                        <br />
+                                        <br />
+                                        <span
+                                            style="background-color: #f8f0d3; border-radius: 25px; border: 5px solid #c95a1f; padding: 10px"><a
+                                                href="/winterparadijs">Inschrijven!</a></span>
                                     </h2>
                                 </div>
                             </div>
@@ -862,7 +842,7 @@ $conn->close();
                             <li><strong>INC</strong> FOTO & MUZIEK RONDE</li>
                             <li><strong>&plusmn;1.5</strong> UUR QUIZ PLEZIER</li>
                             <li>PROFESSIONELE QUIZ MASTER</li>
-                            <li>SNEL KLAAR</li>
+                            <li>SNELLER KLAAR</li>
                             <li class="plan-purchase"><a class="btn btn-primary"
                                     href="mailto:info@quizis.nl?subject=Offerte Quiz Master Turbo">BESTEL
                                     NU</a></li>
