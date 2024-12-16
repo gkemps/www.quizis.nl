@@ -41,15 +41,17 @@ if (!$result = $conn->query($sql)) {
 
 $teams = $result->fetch_all(MYSQLI_ASSOC);
 
-$teamsCount = count($teams);
-
 // loop over teams and determine the number of team members
 $paidMembers = 0;
 $paidTeams = 0;
 $totalMembers = 0;
+$teamsCount = 0;
 foreach ($teams as $k => $team) {
     // determine the number of team members
     // by deviding the paid amount by the price per person
+    if ($team['canceled'] == 1) {
+        continue;
+    }
     $teamMembers = $quiz['maxTeamMembers'];
     if ($team['datePaid'] != null) {
         $teamMembers = 0;
@@ -64,6 +66,7 @@ foreach ($teams as $k => $team) {
         $teamMembers = $team['teamMembers'];
     }
     $totalMembers += $teamMembers;
+    $teamsCount++;
 }
 
 // query the last 3 quiz ids located at the same location
@@ -188,8 +191,9 @@ $stillExpectedTeams = array_filter($stillExpectedTeams, function ($team) use ($t
                         }
 
                         ?>
-                        <tr>
-                            <td><?php echo $k + 1; ?></td>
+                        <tr <?php if ($team['canceled'] == "1")
+                            echo " style=\"text-decoration: line-through;\"" ?>>
+                                <td><?php echo $k + 1; ?></td>
                             <td><?php echo $team['name']; ?></td>
                             <td><?php echo $team['captain']; ?> (<?php echo $team['email']; ?>)</td>
                             <td><?php echo $teamMembers; ?></td>
