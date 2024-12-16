@@ -173,7 +173,8 @@ $formatter->setPattern('EEEE d LLLL HH:mm');
                                     <a href="/betalen?amount=<?php echo $amount; ?>&teamId=<?php echo $team['teamId']; ?>"
                                         target="_blank">via deze link</a>.
                                     <br /><br />
-                                    Daarna ontvang je een bevestiging en is jullie inschrijving defintief.
+                                    Pas na betaling is jullie inschrijving definitief. Op deze pagina kun je controleren of je
+                                    betaling succesvol is afgerond. Je ontvangt daar <strong>geen</strong> aparte bevestiging van.
                             <?php } else if ($prepay && $payPerPerson) { ?>
                                         We ontvangen de bijdrage van <?php echo $quiz['pricePerPerson']; ?> euro pp graag via
                                         onderstaande opties:
@@ -183,7 +184,8 @@ $formatter->setPattern('EEEE d LLLL HH:mm');
                                                 target="_blank">Wij spelen graag mee met <?php echo $i; ?> personen</a><br />
                                 <?php } ?>
                                         <br />
-                                        Daarna ontvang je een bevestiging en is jullie inschrijving defintief.
+                                        Pas na betaling is jullie inschrijving definitief. Op deze pagina kun je controleren of je
+                                        betaling succesvol is afgerond. Je ontvangt daar <strong>geen</strong> aparte bevestiging van.
                             <?php } else if ($payPerTeam) { ?>
                                             We ontvangen de teambijdrage van &euro;<?php echo $amount; ?> graag
                                             <a href="/betalen?amount=<?php echo $amount; ?>&teamId=<?php echo $team['teamId']; ?>"
