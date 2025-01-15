@@ -11,7 +11,7 @@
 <body>
     <header>
         <h1>De Gezellige Pubquiz 2024 - Jaarstand</h1>
-        <p><i>(bijgewerkt tot en met november)</i></p>
+        <p><i>(bijgewerkt tot en met december)</i></p>
     </header>
     <main>
         <!-- Summary Cards -->
@@ -62,44 +62,44 @@
                     <tr>
                         <td>1.</td>
                         <td>Kwis Um</td>
-                        <td>9</td>
+                        <td>10</td>
                         <td>1</td>
-                        <td>69</td>
+                        <td>76</td>
                     </tr>
                     <tr>
                         <td>2.</td>
-                        <td>De Stille Willies</td>
-                        <td>8</td>
-                        <td>1</td>
-                        <td>57</td>
+                        <td>Skiete Willies</td>
+                        <td>6</td>
+                        <td>5</td>
+                        <td>67</td>
                     </tr>
                     <tr>
                         <td>3.</td>
-                        <td>Skiete Willies</td>
-                        <td>5</td>
-                        <td>4</td>
-                        <td>55</td>
+                        <td>De Stille Willies</td>
+                        <td>9</td>
+                        <td>1</td>
+                        <td>65</td>
                     </tr>
                     <tr>
                         <td>4.</td>
                         <td>Kwisblok</td>
-                        <td>9</td>
+                        <td>10</td>
                         <td>2</td>
-                        <td>53</td>
+                        <td>63</td>
                     </tr>
                     <tr>
                         <td>5.</td>
                         <td>Old & Wise</td>
-                        <td>8</td>
+                        <td>9</td>
                         <td></td>
-                        <td>44</td>
+                        <td>50</td>
                     </tr>
                     <tr>
                         <td>6.</td>
                         <td>Uit De Bocht</td>
-                        <td>7</td>
+                        <td>8</td>
                         <td></td>
-                        <td>41</td>
+                        <td>46</td>
                     </tr>
                     <tr>
                         <td>7.</td>
@@ -110,45 +110,45 @@
                     </tr>
                     <tr>
                         <td>8.</td>
+                        <td>Hutje Op De Hei</td>
+                        <td>8</td>
+                        <td></td>
+                        <td>34</td>
+                    </tr>
+                    <tr>
+                        <td>9.</td>
                         <td>Neighbours From Hell</td>
                         <td>6</td>
                         <td></td>
                         <td>34</td>
                     </tr>
                     <tr>
-                        <td>9.</td>
-                        <td>Hutje Op De Hei</td>
-                        <td>7</td>
-                        <td></td>
-                        <td>30</td>
-                    </tr>
-                    <tr>
                         <td>10.</td>
                         <td>Oirschotse Mie-en</td>
-                        <td>9</td>
+                        <td>10</td>
                         <td></td>
-                        <td>9</td>
+                        <td>11</td>
                     </tr>
                     <tr>
                         <td>11.</td>
-                        <td>Allegaartje</td>
-                        <td>6</td>
-                        <td></td>
+                        <td>Lekker Met De Meiden</td>
                         <td>7</td>
+                        <td></td>
+                        <td>9</td>
                     </tr>
                     <tr>
                         <td>12.</td>
-                        <td>Lekker Met De Meiden</td>
-                        <td>6</td>
+                        <td>Allegaartje</td>
+                        <td>7</td>
                         <td></td>
-                        <td>6</td>
+                        <td>8</td>
                     </tr>
                     <tr>
                         <td>13.</td>
                         <td>Bier Is Belangrijker Dan Winnen</td>
-                        <td>5</td>
+                        <td>6</td>
                         <td></td>
-                        <td>5</td>
+                        <td>6</td>
                     </tr>
                     <tr>
                         <td>14.</td>
