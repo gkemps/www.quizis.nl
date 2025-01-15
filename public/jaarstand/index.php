@@ -19,25 +19,25 @@
             <div class="card">
                 <h2>Teams</h2>
                 <p id="total-teams">
-                    160
+                    178
                 </p>
             </div>
             <div class="card">
                 <h2>Quizzers</h2>
                 <p id="paid-teams">
-                    643
+                    734
                 </p>
             </div>
             <div class="card">
                 <h2>Vragen gesteld</h2>
                 <p id="total-members">
-                    720
+                    800
                 </p>
             </div>
             <div class="card">
                 <h2>Punten gehaald</h2>
                 <p id="revenue">
-                    6236,5
+                    6846,5
                 </p>
             </div>
         </section>
@@ -61,8 +61,8 @@
                 <tbody id="teams-table">
                     <tr>
                         <td>1.</td>
-                        <td>Kwis Um</td>
-                        <td>10</td>
+                        <td>Kwis Um 🎉 🥂</td>
+                        <td>10 👏</td>
                         <td>1</td>
                         <td>76</td>
                     </tr>
@@ -83,7 +83,7 @@
                     <tr>
                         <td>4.</td>
                         <td>Kwisblok</td>
-                        <td>10</td>
+                        <td>10 👏</td>
                         <td>2</td>
                         <td>63</td>
                     </tr>
@@ -125,7 +125,7 @@
                     <tr>
                         <td>10.</td>
                         <td>Oirschotse Mie-en</td>
-                        <td>10</td>
+                        <td>10 👏</td>
                         <td></td>
                         <td>11</td>
                     </tr>
