@@ -166,7 +166,7 @@
     <div id="congrats-modal">
         <h1>Gefeliciteerd!</h1>
         <p>Je hebt gewonnen: <span id="prize"></span>!</p>
-        <p>(<small><span id="prize_descr"></span></small>)</p>
+        <p><small><span id="prize_descr"></span></small></p>
         <button id="close-modal">Close</button>
     </div>
     <div id="sorry-modal">
