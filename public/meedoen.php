@@ -34,6 +34,39 @@ $teamname = $conn->real_escape_string($_POST['name']);
 $teamcaptain = $conn->real_escape_string($_POST['captain']);
 $email = $conn->real_escape_string($_POST['email']);
 $quizId = $conn->real_escape_string($_POST['quizId']);
+
+// whitelist validation (server-side fallback)
+$sqlWhitelist = "SELECT whitelistDeadline FROM quiz_Quiz WHERE id = {$quizId}";
+$resultWhitelist = $conn->query($sqlWhitelist);
+
+if ($resultWhitelist && $resultWhitelist->num_rows > 0) {
+    $quizData = $resultWhitelist->fetch_assoc();
+    
+    // Check if whitelist is active
+    if (!empty($quizData['whitelistDeadline'])) {
+        $deadline = new DateTime($quizData['whitelistDeadline']);
+        $now = new DateTime();
+        
+        if ($now < $deadline) {
+            // Whitelist is active, check if email is allowed
+            $sqlCheckEmail = "SELECT id FROM quiz_Whitelist_Email 
+                            WHERE quiz_quiz_id = {$quizId} 
+                            AND LOWER(email) = LOWER('{$email}')
+                            LIMIT 1";
+            
+            $resultCheckEmail = $conn->query($sqlCheckEmail);
+            
+            if (!$resultCheckEmail || $resultCheckEmail->num_rows === 0) {
+                // Email not in whitelist
+                $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https' : 'http';
+                $url = $protocol . '://' . $_SERVER['HTTP_HOST'] . "/er-ging-iets-mis.html";
+                $log->warning("Whitelist validation failed for email: {$email}, quizId: {$quizId}");
+                header('Location: ' . $url);
+                die("Inschrijving niet mogelijk");
+            }
+        }
+    }
+}
 $guid = uniqid();
 $referer = $conn->real_escape_string($_POST['referer']);
 $teamMembers = isset($_POST['teamMembers']) ? intval($_POST['teamMembers']) : "NULL";

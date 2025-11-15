@@ -108,6 +108,21 @@ $teamsLeft = $maxTeams - $nrOfTeams;
 $percFull = round($nrOfTeams / $maxTeams * 100);
 $open = $nrOfTeams < $maxTeams;
 
+// check if whitelist is active
+$whitelistActive = false;
+$whitelistDeadlineFormatted = "";
+if (!empty($quiz['whitelistDeadline'])) {
+    $deadline = new DateTime($quiz['whitelistDeadline']);
+    $now = new DateTime();
+    $whitelistActive = $now < $deadline;
+    
+    if ($whitelistActive) {
+        $deadlineFormatter = new \IntlDateFormatter('nl_NL', \IntlDateFormatter::SHORT, \IntlDateFormatter::SHORT);
+        $deadlineFormatter->setPattern('EEEE d MMMM');
+        $whitelistDeadlineFormatted = lcfirst($deadlineFormatter->format($deadline));
+    }
+}
+
 // check if we have a referer in $_GET or in the $_SERSER global
 $referer = "";
 if (isset($_GET['referer'])) {
@@ -217,6 +232,12 @@ $conn->close();
                     <?php if ($open): ?>
                         <div class="contact-form" style="background: #fbe6da">
                             <h3>Meedoen!</h3>
+                            <?php if ($whitelistActive): ?>
+                                <div class="alert" style="background-color: #fff3cd; border: 1px solid #ffc107; padding: 12px; margin-bottom: 15px; border-radius: 4px;">
+                                    <i class="fa fa-info-circle" style="color: #856404;"></i>
+                                    <strong>Let op:</strong> Inschrijving is momenteel alleen mogelijk voor uitgenodigde deelnemers die maandelijks meespelen (tot <?php echo $whitelistDeadlineFormatted; ?>).
+                                </div>
+                            <?php endif; ?>
                             <?php if ($percFull > 50): ?>
                                 <span class="quizis_color">
                                     <strong>
@@ -230,7 +251,7 @@ $conn->close();
                                     </strong>
                                 </span>
                             <?php endif ?>
-                            <form id="main-contact-form-2" name="contact-form" method="post" action="../meedoen.php">
+                            <form id="main-contact-form-2" name="contact-form" method="post" action="../meedoen.php" data-quiz-id="<?php echo $quiz['id']; ?>">
                                 <div class="form-group">
                                     <input type="text" name="name" class="form-control" placeholder="Teamnaam" required>
                                 </div>
@@ -239,8 +260,9 @@ $conn->close();
                                         required>
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" name="email" class="form-control" placeholder="Email adres"
+                                    <input type="email" id="email-input" name="email" class="form-control" placeholder="Email adres"
                                         required>
+                                    <small id="email-error" class="form-text" style="color: #dc3545; display: none;"></small>
                                     <input class="ohnohoning" autocomplete="off" type="text" name="revcode"
                                         placeholder="Your name here">
                                 </div>
@@ -309,6 +331,82 @@ $conn->close();
     <script>
         document.getElementById('main-contact-form-2').addEventListener('submit', function () {
             document.getElementById('btn-submit').disabled = true;
+        });
+    </script>
+
+    <!-- email whitelist validation -->
+    <script>
+        $(document).ready(function() {
+            var emailInput = $('#email-input');
+            var emailError = $('#email-error');
+            var submitButton = $('#btn-submit');
+            var form = $('#main-contact-form-2');
+            var quizId = form.data('quiz-id');
+            var emailValid = false;
+            var validationInProgress = false;
+
+            function validateEmail() {
+                var email = emailInput.val().trim();
+                
+                // Reset error state
+                emailError.hide().text('');
+                emailInput.removeClass('is-invalid');
+                
+                // Check if email is empty or invalid format
+                if (!email || !email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+                    emailValid = false;
+                    return;
+                }
+                
+                validationInProgress = true;
+                submitButton.prop('disabled', true);
+                
+                // Call validation endpoint
+                $.ajax({
+                    url: '../validate_email.php',
+                    type: 'POST',
+                    data: {
+                        quizId: quizId,
+                        email: email
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        validationInProgress = false;
+                        
+                        if (response.valid) {
+                            emailValid = true;
+                            emailInput.removeClass('is-invalid');
+                            emailError.hide();
+                            submitButton.prop('disabled', false);
+                        } else {
+                            emailValid = false;
+                            emailInput.addClass('is-invalid');
+                            emailError.text(response.message).show();
+                            submitButton.prop('disabled', true);
+                        }
+                    },
+                    error: function() {
+                        validationInProgress = false;
+                        emailValid = false;
+                        emailError.text('Er ging iets mis bij het valideren van het email adres').show();
+                        submitButton.prop('disabled', true);
+                    }
+                });
+            }
+            
+            // Validate on blur (when user leaves the field)
+            emailInput.on('blur', function() {
+                validateEmail();
+            });
+            
+            // Prevent form submission if email is not valid
+            form.on('submit', function(e) {
+                if (!emailValid && !validationInProgress) {
+                    e.preventDefault();
+                    validateEmail();
+                    return false;
+                }
+            });
         });
     </script>
 </body>
