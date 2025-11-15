@@ -205,7 +205,7 @@ $conn->close();
                                 <i class="fa fa-calendar"></i>
                             </div>
                             <div class="media-body">
-                                <h4 class="media-heading">Zet in je agenda</h4>
+                                <h4 class="media-heading">Meer Quizis @ <?php echo $location['name']; ?></h4>
                                 <p><?php echo implode(", ", $futureQuizDates); ?></p>
                             </div>
                         </div>
