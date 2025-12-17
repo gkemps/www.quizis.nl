@@ -826,10 +826,10 @@ $conn->close();
                             <li class="plan-header">
                                 <div class="price-duration">
                                     <span class="price">
-                                        €3 pp
+                                        va €300
                                     </span>
                                     <span class="duration">
-                                        min. €150
+                                        &nbsp;
                                     </span>
                                 </div>
 
@@ -855,10 +855,10 @@ $conn->close();
                             <li class="plan-header">
                                 <div class="price-duration">
                                     <span class="price">
-                                        €4 pp
+                                        va €400
                                     </span>
                                     <span class="duration">
-                                        min. €200
+                                        &nbsp;
                                     </span>
                                 </div>
 
