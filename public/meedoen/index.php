@@ -92,8 +92,8 @@ if ($maxTeams == "") {
     $maxTeams = 100;
 }
 
-// fetch all registered teams
-$sql = "SELECT * FROM quiz_Team WHERE quiz_quiz_id = {$quiz['id']} ORDER BY id ASC";
+// fetch all registered teams that are not cancelled (nocoalesce)
+$sql = "SELECT * FROM quiz_Team WHERE quiz_quiz_id = {$quiz['id']} AND COALESCE(canceled, 0) = 0 ORDER BY id ASC";
 if (!$result = $conn->query($sql)) {
     die("error: " . $conn->error . " (Query: $sql)");
 }
