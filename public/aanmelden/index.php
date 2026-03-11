@@ -3,7 +3,8 @@ include '../connect.php';
 
 ob_start();
 
-$sql = "SELECT * FROM quizis.quiz_Quiz where date > '" . date("Y") . "-" . date("m") . "-" . date("d") . " " . date("H") . ":" . date("i") . ":" . date("s") . "' AND date <= '2025-" . date("m") . "-" . date("d") . " 23:59:59' AND private = 0 and presentation = 1  order by date ASC limit 1";
+$sql = "SELECT * FROM quizis.quiz_Quiz where date > '" . date("Y") . "-" . date("m") . "-" . date("d") . " " . date("H") . ":" . date("i") . ":" . date("s") . "' AND date <= '" . date("Y") . "-" . date("m") . "-" . date("d") . " 23:59:59' AND private = 0 and presentation = 1  order by date ASC limit 1";
+
 $result = $conn->query($sql);
 $quiz = mysqli_fetch_assoc($result);
 if (empty($quiz)) {
